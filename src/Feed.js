@@ -3,7 +3,7 @@ import TweetBox from './TweetBox';
 import Post from './Post';
 import './Feed.css';
 import FlipMove from 'react-flip-move';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Login from './pages/Login';
 import { useEffect } from 'react';
 import { getTweets } from './features/tweet/tweetSlice';
@@ -11,9 +11,9 @@ import { getTweets } from './features/tweet/tweetSlice';
 function Feed() {
   const { isLoggedIn, token } = useSelector((state) => state.user);
   const { tweets } = useSelector((state) => state.tweet);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    getTweets(token);
+    dispatch(getTweets(token));
   }, [token]);
 
   return (
@@ -25,13 +25,11 @@ function Feed() {
           <FlipMove>
             {tweets?.map((post) => (
               <Post
-                key={post.text}
-                displayName={post.displayName}
-                username={post.username}
-                verified={post.verified}
-                text={post.text}
-                avatar={post.avatar}
-                image={post.image}
+                key={post.tweetId}
+                displayName={post.createdByName}
+                username={post.createdByName}
+                verified='false'
+                text={post.message}
               />
             ))}
           </FlipMove>

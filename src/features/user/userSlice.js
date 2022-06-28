@@ -6,11 +6,10 @@ const getUserUrl = 'https://tweet-postgress-auth.herokuapp.com/auth/validate';
 
 const initialState = {
   user: [],
-  isLoggedIn: false,
+  isLoggedIn: true,
   isLoading: false,
   userId: '',
-  token:
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJobW50LnNoYXJtYTA5MkBnbWFpbC5jb20iLCJleHAiOjE2NTU1NzM2NDYsImlhdCI6MTY1NTU2Mjg0Nn0.rpsjq60wChreMr3sVkQNxFp2cdJ-S3qrxHyFVoWEHrQ',
+  token: '',
   loginInput: {
     userId: '',
     password: '',

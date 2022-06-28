@@ -13,6 +13,7 @@ export const getTweets = createAsyncThunk(
   async (reqBody, thunkAPI) => {
     try {
       //   const authToken = reqBody.token;
+      console.log('calling tweet api');
       const resp = await axios.get(getTweetUrl, {
         headers: {
           Authorization: `Bearer ${reqBody}`,
