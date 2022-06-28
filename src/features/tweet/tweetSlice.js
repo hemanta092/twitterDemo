@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const getTweetUrl = 'https://tweet-postgress-auth.herokuapp.com/auth/login';
+//const getTweetUrl = 'https://tweet-postgress-auth.herokuapp.com/auth/login';
+
+//const getTweetUrl = 'http://localhost:8082/tweet/getAllTweets';
+const getTweetUrl = 'http://localhost:8082/tweet/getTweetsByUserNameRegex/Annu';
+
 
 const initialState = {
   isLoading: false,
@@ -15,9 +19,8 @@ export const getTweets = createAsyncThunk(
       //   const authToken = reqBody.token;
       const resp = await axios.get(getTweetUrl, {
         headers: {
-          Authorization: `Bearer ${reqBody}`,
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          Authorization: reqBody,
+          //'Access-Control-Allow-Origin': '*',
         },
       });
       return resp.data;

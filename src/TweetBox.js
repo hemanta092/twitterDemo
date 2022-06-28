@@ -22,14 +22,17 @@ function TweetBox() {
             value={tweetMessage}
             placeholder="What's happening?"
             type='text'
+            maxLength='144'
           />
         </div>
         <input
           value={tweetImage}
           onChange={(e) => setTweetImage(e.target.value)}
           className='tweetBox__imageInput'
-          placeholder='Optional: Enter image URL'
+          placeholder='Tags : '
           type='text'
+          maxLength='50'
+
         />
 
         <Button

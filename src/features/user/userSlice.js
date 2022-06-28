@@ -1,8 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const loginurl = 'https://tweet-postgress-auth.herokuapp.com/auth/login';
-const getUserUrl = 'https://tweet-postgress-auth.herokuapp.com/auth/validate';
+//const loginurl = 'https://tweet-postgress-auth.herokuapp.com/auth/login';
+//const getUserUrl = 'https://tweet-postgress-auth.herokuapp.com/auth/validate';
+
+const loginurl = 'http://localhost:8081/auth/login';
+const getUserUrl = 'http://localhost:8081/auth/validate';
 
 const initialState = {
   user: [],
@@ -10,7 +13,7 @@ const initialState = {
   isLoading: false,
   userId: '',
   token:
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJobW50LnNoYXJtYTA5MkBnbWFpbC5jb20iLCJleHAiOjE2NTU1NzM2NDYsImlhdCI6MTY1NTU2Mjg0Nn0.rpsjq60wChreMr3sVkQNxFp2cdJ-S3qrxHyFVoWEHrQ',
+    '',
   loginInput: {
     userId: '',
     password: '',
@@ -40,7 +43,7 @@ export const getUser = createAsyncThunk(
   'user/getUser',
   async (reqBody, thunkAPI) => {
     let headers = {
-      Authorization: `Bearer ${reqBody}`,
+      Authorization: reqBody,
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Controll-Allow-Methods': '*',
