@@ -22,13 +22,12 @@ function Feed() {
         <div className='feed'>
           <TweetBox />
 
-          <FlipMove>
+          <FlipMove className = 'flipclass'>
           {tweets?.map((post) => (
             <Post
              key={post.tweetId}
              displayName={post.createdByName}
              username={post.createdById}
-             verified='false'
              text={post.message}
             />
             ))}

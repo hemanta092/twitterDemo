@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const getTweetUrl = 'http://localhost:8082/tweet/getAllTweets';
+const addTweetUrl = 'http://localhost:8082/tweet/addTweet';
 
 const initialState = {
   isLoading: false,
