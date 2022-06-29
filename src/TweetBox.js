@@ -31,6 +31,7 @@ function TweetBox() {
             value={tweetMessage}
             placeholder="What's happening?"
             type='text'
+            maxLength='144'
           />
         </div>
 

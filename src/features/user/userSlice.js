@@ -1,8 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const loginurl = 'https://tweet-postgress-auth.herokuapp.com/auth/login';
-const getUserUrl = 'https://tweet-postgress-auth.herokuapp.com/auth/validate';
+//const loginurl = 'https://tweet-postgress-auth.herokuapp.com/auth/login';
+//const getUserUrl = 'https://tweet-postgress-auth.herokuapp.com/auth/validate';
+
+const loginurl = 'http://localhost:8081/auth/login';
+const getUserUrl = 'http://localhost:8081/auth/validate';
 
 const initialState = {
   user: [],

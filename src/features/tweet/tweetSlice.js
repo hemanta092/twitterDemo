@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const getTweetUrl = 'https://tweet-postgress-auth.herokuapp.com/auth/login';
-const addTweetUrl = '';
+const getTweetUrl = 'http://localhost:8082/tweet/getAllTweets';
 
 const initialState = {
   isLoading: false,
