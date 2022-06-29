@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import './TweetBox.css';
 import { Button } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { addTweet } from './features/tweet/tweetSlice';
 
 function TweetBox() {
   const [tweetMessage, setTweetMessage] = useState('');
-  const [tweetImage, setTweetImage] = useState('');
+  const { token } = useSelector((state) => state.tweet);
+
+  const dispatch = useDispatch();
 
   const sendTweet = (e) => {
     e.preventDefault();
-
+    const data = {
+      body: {
+        message: tweetMessage,
+      },
+      token,
+    };
+    dispatch(addTweet(data));
     setTweetMessage('');
-    setTweetImage('');
   };
 
   return (
@@ -24,13 +33,6 @@ function TweetBox() {
             type='text'
           />
         </div>
-        <input
-          value={tweetImage}
-          onChange={(e) => setTweetImage(e.target.value)}
-          className='tweetBox__imageInput'
-          placeholder='Optional: Enter image URL'
-          type='text'
-        />
 
         <Button
           onClick={sendTweet}

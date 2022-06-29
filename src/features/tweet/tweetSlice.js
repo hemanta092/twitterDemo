@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const getTweetUrl = 'https://tweet-postgress-auth.herokuapp.com/auth/login';
+const addTweetUrl = '';
 
 const initialState = {
   isLoading: false,
@@ -16,7 +17,7 @@ export const getTweets = createAsyncThunk(
       console.log('calling tweet api');
       const resp = await axios.get(getTweetUrl, {
         headers: {
-          Authorization: `Bearer ${reqBody}`,
+          Authorization: reqBody,
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
         },
@@ -26,6 +27,20 @@ export const getTweets = createAsyncThunk(
       console.error(error);
       return thunkAPI.rejectWithValue('something went wrong');
     }
+  }
+);
+
+export const addTweet = createAsyncThunk(
+  'tweet/addTweet',
+  async (reqBody, thunkAPI) => {
+    try {
+      const res = await axios.post(addTweetUrl, JSON.stringify(reqBody.body), {
+        headers: {
+          Authorization: reqBody.token,
+        },
+      });
+      return res;
+    } catch (err) {}
   }
 );
 

@@ -14,7 +14,7 @@ function Feed() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTweets(token));
-  }, [token]);
+  }, [dispatch, token]);
 
   return (
     <>
