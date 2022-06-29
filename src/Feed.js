@@ -11,9 +11,7 @@ import { getTweets } from './features/tweet/tweetSlice';
 function Feed() {
   const { isLoggedIn, token } = useSelector((state) => state.user);
   const { tweets } = useSelector((state) => state.tweet);
-
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getTweets(token));
   }, [token]);
@@ -26,15 +24,14 @@ function Feed() {
 
           <FlipMove>
           {tweets?.map((post) => (
-
-<Post
- key={post.tweetId}
- displayName={post.createdByName}
- username={post.createdById}
- verified='false'
- text={post.message}
-/>
-))}
+            <Post
+             key={post.tweetId}
+             displayName={post.createdByName}
+             username={post.createdById}
+             verified='false'
+             text={post.message}
+            />
+            ))}
           </FlipMove>
         </div>
       ) : (

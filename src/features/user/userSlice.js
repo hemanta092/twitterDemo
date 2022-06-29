@@ -9,11 +9,10 @@ const getUserUrl = 'http://localhost:8081/auth/validate';
 
 const initialState = {
   user: [],
-  isLoggedIn: false,
+  isLoggedIn: true,
   isLoading: false,
   userId: '',
-  token:
-    '',
+  token: '',
   loginInput: {
     userId: '',
     password: '',
