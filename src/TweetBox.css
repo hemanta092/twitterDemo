@@ -1,6 +1,7 @@
 .tweetBox {
+  margin: 2rem 0; 
   padding-bottom: 10px;
-  border-bottom: 8px solid var(--twitter-background);
+  border: 8px solid var(--twitter-background);
   padding-right: 10px;
   width: 50%;
 }
@@ -20,6 +21,8 @@
   margin-left: 20px;
   font-size: 20px;
   border: none;
+  outline: none;
+  
 }
 
 .tweetBox__imageInput {

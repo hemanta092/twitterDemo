@@ -32,6 +32,7 @@ function TweetBox() {
             placeholder="What's happening?"
             type='text'
             maxLength='144'
+            autoFocus
           />
         </div>
 
