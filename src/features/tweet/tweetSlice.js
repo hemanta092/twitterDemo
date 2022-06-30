@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const getTweetUrl = 'http://localhost:8082/tweet/getAllTweets';
+const addTweetUrl = 'http://localhost:8082/tweet/addTweet';
 
 const initialState = {
   isLoading: false,
@@ -39,7 +40,10 @@ export const addTweet = createAsyncThunk(
         },
       });
       return res;
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+      return thunkAPI.rejectWithValue('something went wrong');
+    }
   }
 );
 
@@ -60,7 +64,6 @@ const tweetSlice = createSlice({
       state.tweets = action.payload;
     },
     [getTweets.rejected]: (state, action) => {
-      console.log('rejected', action);
       state.isLoading = false;
     },
   },
