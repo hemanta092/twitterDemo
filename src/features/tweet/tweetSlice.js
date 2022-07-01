@@ -3,10 +3,14 @@ import axios from 'axios';
 
 const getTweetUrl = 'http://localhost:8082/tweet/getAllTweets';
 const addTweetUrl = 'http://localhost:8082/tweet/addTweet';
+const getMyTweetsUrl = 'http://localhost:8082/tweet/getTweetsByUserId';
+const getAllUsersUrl = 'http://localhost:8082/tweet/getAllUsers';
 
 const initialState = {
   isLoading: false,
   tweets: [],
+  myTweets: [],
+  allUsers: [],
 };
 
 export const getTweets = createAsyncThunk(
@@ -47,6 +51,40 @@ export const addTweet = createAsyncThunk(
   }
 );
 
+export const getMyTweets = createAsyncThunk(
+  'tweet/getMyTweetsgetMyTweets',
+  async (reqBody, thunkAPI) => {
+    try {
+      const res = await axios.get(`${getMyTweetsUrl}/${reqBody.userId}`, {
+        headers: {
+          Authorization: reqBody.token,
+        },
+      });
+      return res;
+    } catch (err) {
+      console.error(err);
+      return thunkAPI.rejectWithValue('something went wrong');
+    }
+  }
+);
+
+export const getAllUsers = createAsyncThunk(
+  'tweet/getAllUsers',
+  async (reqBody, thunkAPI) => {
+    try {
+      const res = await axios.get(getAllUsersUrl, {
+        headers: {
+          Authorization: reqBody,
+        },
+      });
+      return res;
+    } catch (err) {
+      console.error(err);
+      return thunkAPI.rejectWithValue('something went wrong');
+    }
+  }
+);
+
 const tweetSlice = createSlice({
   name: 'tweet',
   initialState,
@@ -65,6 +103,15 @@ const tweetSlice = createSlice({
     },
     [getTweets.rejected]: (state, action) => {
       state.isLoading = false;
+    },
+    [addTweet.fulfilled]: (state, action) => {
+      state.tweets = action.payload;
+    },
+    [getMyTweets.fulfilled]: (state, action) => {
+      state.myTweets = action.payload;
+    },
+    [getAllUsers.fulfilled]: (state, action) => {
+      state.allUsers = action.payload;
     },
   },
 });

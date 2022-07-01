@@ -21,7 +21,6 @@ function Feed() {
       {isLoggedIn ? (
         <div className='feed'>
           <TweetBox />
-
           <FlipMove>
             {tweets?.map((post) => (
               <Post
@@ -35,7 +34,6 @@ function Feed() {
           </FlipMove>
         </div>
       ) : (
-        //navigate('/login')
         <Login />
       )}
     </>

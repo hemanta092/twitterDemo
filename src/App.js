@@ -5,6 +5,9 @@ import './App.css';
 import SharedLayout from './pages/SharedLayout';
 import Error from './pages/Error';
 import Login from './pages/Login';
+import MyTweets from './pages/MyTweets';
+import AllUsers from './pages/AllUsers';
+import SearchUser from './pages/SearchUser';
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
           <Route index element={<Feed />} />
           <Route path='login' element={<Login></Login>} />
           <Route path='*' element={<Error />} />
+          <Route path='my_tweets' element={<MyTweets />} />
+          <Route path='all_users' element={<AllUsers />} />
+          <Route path='search_users' element={<SearchUser />} />
         </Route>
       </Routes>
     </BrowserRouter>
