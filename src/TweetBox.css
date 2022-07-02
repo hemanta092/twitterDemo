@@ -1,9 +1,8 @@
 .tweetBox {
-  margin: 2rem 0; 
   padding-bottom: 10px;
   border: 8px solid var(--twitter-background);
   padding-right: 10px;
-  width: 50%;
+  width: 95%;
 }
 
 .tweetBox > form {

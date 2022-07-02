@@ -22,7 +22,9 @@ function Feed() {
       {isLoggedIn ? (
         <div className='feed'>
           <TweetBox />
+          <div className="mainpost">
           <FlipMove>
+            
             {tweets?.map((post) => (
               <Post
                 key={post.tweetId}
@@ -31,7 +33,9 @@ function Feed() {
                 text={post.message}
               />
             ))}
+            
           </FlipMove>
+          </div>
         </div>
       ) : (
         <Login />
