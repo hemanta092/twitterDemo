@@ -38,7 +38,7 @@ export const addTweet = createAsyncThunk(
   'tweet/addTweet',
   async (reqBody, thunkAPI) => {
     try {
-      const res = await axios.post(addTweetUrl, JSON.stringify(reqBody.body), {
+      const res = await axios.post(addTweetUrl, reqBody.body, {
         headers: {
           Authorization: reqBody.token,
         },
@@ -105,13 +105,13 @@ const tweetSlice = createSlice({
       state.isLoading = false;
     },
     [addTweet.fulfilled]: (state, action) => {
-      state.tweets = action.payload;
+      state.tweets = [...state.tweets, action.payload.data];
     },
     [getMyTweets.fulfilled]: (state, action) => {
-      state.myTweets = action.payload;
+      state.myTweets = action.payload.data;
     },
     [getAllUsers.fulfilled]: (state, action) => {
-      state.allUsers = action.payload;
+      state.allUsers = action.payload.data;
     },
   },
 });

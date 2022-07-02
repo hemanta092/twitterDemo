@@ -45,16 +45,8 @@ const SearchUser = () => {
         Search
       </Button>
       <Divider />
-      {user?.map((u) => (
-        <List>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>R</Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={u.Id} secondary='Jan 9, 2014' />
-          </ListItem>
-        </List>
-      ))}
+    {console.log(user)}
+     
     </>
   );
 };
