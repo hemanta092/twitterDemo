@@ -5,7 +5,7 @@ const getTweetUrl = 'http://localhost:8082/tweet/getAllTweets';
 const addTweetUrl = 'http://localhost:8082/tweet/addTweet';
 const getMyTweetsUrl = 'http://localhost:8082/tweet/getTweetsByUserId';
 const getAllUsersUrl = 'http://localhost:8082/tweet/getAllUsers';
-const searchUserURL = 'http://localhost:8081/auth/searchByUserName/';
+const searchUserURL = 'http://localhost:8082/tweet/searchByUserName';
 
 const initialState = {
   isLoading: false,

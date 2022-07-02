@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <Grid container spacing={6}>
+      <Grid container spacing={0}>
         <Grid item xs={3}></Grid>
         <Grid item xs={6}>
           <Outlet />
