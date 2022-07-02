@@ -9,6 +9,8 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginBottom : '2rem',
+    width : '100%',
   },
   menuButton: {
     marginRight: theme.spacing(2),

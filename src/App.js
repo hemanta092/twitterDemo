@@ -15,7 +15,6 @@ function App() {
       <Routes>
         <Route path='/' element={<SharedLayout />}>
           <Route index element={<Feed />} />
-          <Route path='login' element={<Login></Login>} />
           <Route path='*' element={<Error />} />
           <Route path='my_tweets' element={<MyTweets />} />
           <Route path='all_users' element={<AllUsers />} />
