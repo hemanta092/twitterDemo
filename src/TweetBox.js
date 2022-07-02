@@ -6,7 +6,7 @@ import { addTweet } from './features/tweet/tweetSlice';
 
 function TweetBox() {
   const [tweetMessage, setTweetMessage] = useState('');
-  const { token } = useSelector((state) => state.tweet);
+  const { token } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 

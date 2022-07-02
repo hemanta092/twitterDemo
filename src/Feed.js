@@ -14,7 +14,8 @@ function Feed() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTweets(token));
-  }, [dispatch, token, tweets]);
+  }, [dispatch, token]);
+
 
   return (
     <>
@@ -27,7 +28,6 @@ function Feed() {
                 key={post.tweetId}
                 displayName={post.createdByName}
                 username={post.createdById}
-                verified='false'
                 text={post.message}
               />
             ))}

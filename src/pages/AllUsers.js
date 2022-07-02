@@ -34,7 +34,7 @@ const AllUsers = () => {
             <ListItemAvatar>
               <Avatar>R</Avatar>
             </ListItemAvatar>
-            <ListItemText primary={user.Id} secondary='Jan 9, 2014' />
+            <ListItemText primary={user.userId} secondary={user.firstName} />
           </ListItem>
         </List>
       ))}
