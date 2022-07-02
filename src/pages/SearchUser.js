@@ -1,7 +1,9 @@
 import {
   Avatar,
   Button,
+  Container,
   Divider,
+  Grid,
   List,
   ListItem,
   ListItemAvatar,
@@ -10,44 +12,74 @@ import {
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllUsers } from '../features/tweet/tweetSlice';
+import { searchUserByUsername } from '../features/tweet/tweetSlice';
 
 const SearchUser = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.user);
-  const { allUsers } = useSelector((state) => state.tweet);
+  const { searchUserResults } = useSelector((state) => state.tweet);
 
   const [userInput, setUserInput] = useState('');
-  const [user, setUser] = useState([]);
 
   useEffect(() => {
-    setUser(
-      allUsers.find((x) => x.userId === userInput || x.firstName === userInput)
-    );
-  }, [userInput, allUsers]);
-
-  useEffect(() => {
-    dispatch(getAllUsers(token));
-  }, [token, dispatch]);
+    if (userInput.length >= 3) {
+      dispatch(searchUserByUsername({ userInput, token }));
+    }
+  }, [token, userInput, dispatch]);
 
   const searchUserInputHandler = (e) => {
     setUserInput(e.target.value);
   };
 
   return (
-    <>
-      <TextField
-        label='Search User'
-        variant='outlined'
-        onChange={searchUserInputHandler}
-      />
-      <Button variant='contained' color='primary'>
-        Search
-      </Button>
+    <Container maxWidth='sm'>
+      <Grid
+        container
+        direction='row'
+        justifyContent='space-evenly'
+        alignItems='center'>
+        <Grid item xs={9}>
+          <TextField
+            label='Search User'
+            variant='outlined'
+            size='small'
+            fullWidth
+            onChange={searchUserInputHandler}
+          />
+        </Grid>
+        <Grid item xs>
+          <Button size='medium' variant='contained' fullWidth color='primary'>
+            Search
+          </Button>
+        </Grid>
+      </Grid>
       <Divider />
-    {console.log(user)}
-     
-    </>
+      <Grid
+        container
+        direction='column'
+        justifyContent='space-evenly'
+        alignItems='stretch'>
+        {searchUserResults === undefined || searchUserResults.length === 0 ? (
+          <h2>No User Found</h2>
+        ) : (
+          searchUserResults.map((user) => (
+            <Grid item xs>
+              <List>
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar>{user.firstName.charAt(0)}</Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={user.userId}
+                    secondary={user.firstName}
+                  />
+                </ListItem>
+              </List>
+            </Grid>
+          ))
+        )}
+      </Grid>
+    </Container>
   );
 };
 

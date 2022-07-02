@@ -21,6 +21,7 @@ function App() {
           <Route path='all_users' element={<AllUsers />} />
           <Route path='search_users' element={<SearchUser />} />
         </Route>
+        <Route path='/login' exact element={<Login></Login>} />
       </Routes>
     </BrowserRouter>
   );

@@ -5,12 +5,14 @@ const getTweetUrl = 'http://localhost:8082/tweet/getAllTweets';
 const addTweetUrl = 'http://localhost:8082/tweet/addTweet';
 const getMyTweetsUrl = 'http://localhost:8082/tweet/getTweetsByUserId';
 const getAllUsersUrl = 'http://localhost:8082/tweet/getAllUsers';
+const searchUserURL = 'http://localhost:8081/auth/searchByUserName/';
 
 const initialState = {
   isLoading: false,
   tweets: [],
   myTweets: [],
   allUsers: [],
+  searchUserResults: [],
 };
 
 export const getTweets = createAsyncThunk(
@@ -85,6 +87,23 @@ export const getAllUsers = createAsyncThunk(
   }
 );
 
+export const searchUserByUsername = createAsyncThunk(
+  'tweet/searchUserByUsername',
+  async (reqBody, thunkAPI) => {
+    try {
+      const res = await axios.get(`${searchUserURL}/${reqBody.userInput}`, {
+        headers: {
+          Authorization: reqBody.token,
+        },
+      });
+      return res;
+    } catch (err) {
+      console.error(err);
+      return thunkAPI.rejectWithValue('something went wrong');
+    }
+  }
+);
+
 const tweetSlice = createSlice({
   name: 'tweet',
   initialState,
@@ -112,6 +131,9 @@ const tweetSlice = createSlice({
     },
     [getAllUsers.fulfilled]: (state, action) => {
       state.allUsers = action.payload.data;
+    },
+    [searchUserByUsername.fulfilled]: (state, action) => {
+      state.searchUserResults = action.payload.data;
     },
   },
 });
