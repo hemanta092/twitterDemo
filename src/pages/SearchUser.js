@@ -63,7 +63,7 @@ const SearchUser = () => {
           <h2>No User Found</h2>
         ) : (
           searchUserResults.map((user) => (
-            <Grid item xs>
+            <Grid item md>
               <List>
                 <ListItem>
                   <ListItemAvatar>

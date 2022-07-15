@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TweetCard from '../components/TweetCard';
+import { Grid } from '@material-ui/core';
 import { getMyTweets } from '../features/tweet/tweetSlice';
 
 const MyTweets = () => {
@@ -12,16 +13,21 @@ const MyTweets = () => {
     dispatch(getMyTweets({ token, userId }));
   }, [token, userId, dispatch]);
   return (
-    <>
+    <Grid
+      container
+      direction='column'
+      justifyContent='space-evenly'
+      alignItems='stretch'>
       {myTweets?.map((tweet) => (
-        <TweetCard
-          key={tweet.id}
-          displayName={tweet.createdByName}
-          username={tweet.createdById}
-          text={tweet.message}
-        />
+        <Grid item md key={tweet.id}>
+          <TweetCard
+            displayName={tweet.createdByName}
+            username={tweet.createdById}
+            text={tweet.message}
+          />
+        </Grid>
       ))}
-    </>
+    </Grid>
   );
 };
 

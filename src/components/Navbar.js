@@ -5,12 +5,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom : '2rem',
-    width : '100%',
+    marginBottom: '2rem',
+    width: '100%',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -27,13 +28,19 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
   const classes = useStyles();
+  const { isLoggedIn } = useSelector((state) => state.user);
   return (
     <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar className={classes.flexSpaceBetween}>
           <TwitterIcon />
           <Link to='/login'>
-            <Button variant='outlined'>Login</Button>
+            {isLoggedIn ? (
+              <Button variant='outlined'>Sign Out</Button>
+            ) : (
+              <Button variant='outlined'>Login</Button>
+            )}
+            {/* <Button variant='outlined'>Login</Button> */}
           </Link>
         </Toolbar>
       </AppBar>
