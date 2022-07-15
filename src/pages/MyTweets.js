@@ -13,21 +13,24 @@ const MyTweets = () => {
     dispatch(getMyTweets({ token, userId }));
   }, [token, userId, dispatch]);
   return (
-    <Grid
-      container
-      direction='column'
-      justifyContent='space-evenly'
-      alignItems='stretch'>
-      {myTweets?.map((tweet) => (
-        <Grid item md key={tweet.id}>
-          <TweetCard
-            displayName={tweet.createdByName}
-            username={tweet.createdById}
-            text={tweet.message}
-          />
-        </Grid>
-      ))}
-    </Grid>
+    <>
+      <h1>My Tweets</h1>
+      <Grid
+        container
+        direction='column'
+        justifyContent='space-evenly'
+        alignItems='stretch'>
+        {myTweets?.map((tweet) => (
+          <Grid item md key={tweet.id}>
+            <TweetCard
+              displayName={tweet.createdByName}
+              username={tweet.createdById}
+              text={tweet.message}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </>
   );
 };
 

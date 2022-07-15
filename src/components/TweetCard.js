@@ -12,6 +12,9 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { likeTweet, tweetReply } from '../features/tweet/tweetSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,15 +39,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TweetCard({ displayName, username, text, liked }) {
+export default function TweetCard({
+  id,
+  displayName,
+  username,
+  text,
+  liked,
+  likeCount,
+  replies,
+}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [reply, setReply] = React.useState('');
+
+  const { token } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleLikeTweet = () => {};
+  const handleLikeTweet = () => {
+    dispatch(
+      likeTweet({
+        tweetId: id,
+        token,
+      })
+    );
+  };
+
+  const handleTweetReply = () => {
+    dispatch(tweetReply({
+      tweetId: id,
+      body: {
+        "replyMsg" : reply
+      },
+      token
+    }))
+  };
 
   return (
     <Card className={classes.root}>
@@ -65,6 +97,7 @@ export default function TweetCard({ displayName, username, text, liked }) {
       <CardActions disableSpacing>
         <IconButton aria-label='Like Tweet' onClick={handleLikeTweet}>
           {liked ? <FavoriteIcon /> : <FavoriteIcon color='primary' />}
+          <p>{likeCount}</p>
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {
@@ -78,33 +111,18 @@ export default function TweetCard({ displayName, username, text, liked }) {
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
-            set aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-            over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-            stirring occasionally until lightly browned, 6 to 8 minutes.
-            Transfer shrimp to a large plate and set aside, leaving chicken and
-            chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes,
-            onion, salt and pepper, and cook, stirring often until thickened and
-            fragrant, about 10 minutes. Add saffron broth and remaining 4 1/2
-            cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and
-            peppers, and cook without stirring, until most of the liquid is
-            absorbed, 15 to 18 minutes. Reduce heat to medium-low, add reserved
-            shrimp and mussels, tucking them down into the rice, and cook again
-            without stirring, until mussels have opened and rice is just tender,
-            5 to 7 minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then
-            serve.
-          </Typography>
+          <TextField
+            label='Reply'
+            variant='outlined'
+            onChange={(e) => setReply(e.target.value)}
+          />
+          <Button onClick={handleTweetReply}>Post Reply</Button>
+          {replies?.map((r) => (
+            <div>
+              <Typography>{r.userId}</Typography>
+              <Typography paragraph>{r.replyMsg}</Typography>
+            </div>
+          ))}
         </CardContent>
       </Collapse>
     </Card>

@@ -4,12 +4,19 @@ import Navbar from '../components/Navbar';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { Box } from '@material-ui/core';
+import pic from '../resources/blank.jpg';
+
 const Home = () => {
   return (
     <>
       <Navbar />
       <Grid container spacing={0}>
-        <Grid item xs={3}></Grid>
+        <Grid item xs={3}>
+          <Box>
+            <img src={pic} alt='' />
+          </Box>
+        </Grid>
         <Grid item xs={6}>
           <Outlet />
         </Grid>
@@ -19,6 +26,9 @@ const Home = () => {
             color='primary'
             aria-label='vertical contained primary button group'
             variant='text'>
+            <Link to='/'>
+              <Button>All Tweets Tweets</Button>
+            </Link>
             <Link to='/my_tweets'>
               <Button>My Tweets</Button>
             </Link>

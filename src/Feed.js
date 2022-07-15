@@ -35,11 +35,15 @@ function Feed() {
           justifyContent='space-evenly'
           alignItems='stretch'>
           {tweets?.map((post) => (
-            <Grid item md key={post.id}>
+            <Grid item md key={post.tweetId}>
               <TweetCard
+                id={post.tweetId}
                 displayName={post.createdByName}
                 username={post.createdById}
                 text={post.message}
+                liked={post.hasLiked}
+                likeCount={post.tweetLikesCount}
+                replies={post.tweetReply}
               />
             </Grid>
           ))}

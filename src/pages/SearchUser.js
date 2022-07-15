@@ -60,7 +60,7 @@ const SearchUser = () => {
         justifyContent='space-evenly'
         alignItems='stretch'>
         {searchUserResults === undefined || searchUserResults.length === 0 ? (
-          <h2>No User Found</h2>
+          <h2>Search Users</h2>
         ) : (
           searchUserResults.map((user) => (
             <Grid item md>

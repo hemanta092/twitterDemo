@@ -28,6 +28,7 @@ const AllUsers = () => {
 
   return (
     <>
+      <h1>All Users</h1>
       {allUsers?.map((user) => (
         <List className={classes.root}>
           <ListItem>

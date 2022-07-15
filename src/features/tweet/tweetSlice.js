@@ -6,6 +6,8 @@ const addTweetUrl = 'http://localhost:8082/tweet/addTweet';
 const getMyTweetsUrl = 'http://localhost:8082/tweet/getTweetsByUserId';
 const getAllUsersUrl = 'http://localhost:8082/tweet/getAllUsers';
 const searchUserURL = 'http://localhost:8082/tweet/searchByUserName';
+const likeTweetURL = 'http://localhost:8082/likeTweet';
+const replyTweetURL = 'http://localhost:8082/tweet/replyTweet';
 
 const initialState = {
   isLoading: false,
@@ -103,6 +105,39 @@ export const searchUserByUsername = createAsyncThunk(
     }
   }
 );
+
+export const likeTweet = createAsyncThunk(
+  'likeTweet',
+  async (reqBody, thunkAPI) => {
+    try {
+      const res = await axios.get(`${likeTweetURL}/${reqBody.tweetId}`, {
+        headers: {
+          Authorization: reqBody.token,
+        },
+      });
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+
+export const tweetReply = createAsyncThunk('tweetReply', async (reqBody) => {
+  try {
+    const res = axios.post(
+      `${replyTweetURL}/${reqBody.tweetId}`,
+      reqBody.body,
+      {
+        headers: {
+          Authorization: reqBody.token,
+        },
+      }
+    );
+    return res;
+  } catch (err) {
+    console.error(err);
+  }
+});
 
 const tweetSlice = createSlice({
   name: 'tweet',
