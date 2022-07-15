@@ -36,13 +36,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TweetCard({ displayName, username, text }) {
+export default function TweetCard({ displayName, username, text, liked }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const handleLikeTweet = () => {};
 
   return (
     <Card className={classes.root}>
@@ -61,8 +63,8 @@ export default function TweetCard({ displayName, username, text }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label='Like Tweet'>
-          <FavoriteIcon />
+        <IconButton aria-label='Like Tweet' onClick={handleLikeTweet}>
+          {liked ? <FavoriteIcon /> : <FavoriteIcon color='primary' />}
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {
