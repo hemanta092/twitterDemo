@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  replyBorder: {
+    border: '2px solid black',
+  },
 }));
 
 export default function TweetCard({
@@ -69,13 +72,15 @@ export default function TweetCard({
   };
 
   const handleTweetReply = () => {
-    dispatch(tweetReply({
-      tweetId: id,
-      body: {
-        "replyMsg" : reply
-      },
-      token
-    }))
+    dispatch(
+      tweetReply({
+        tweetId: id,
+        body: {
+          replyMsg: reply,
+        },
+        token,
+      })
+    );
   };
 
   return (
@@ -96,7 +101,7 @@ export default function TweetCard({
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='Like Tweet' onClick={handleLikeTweet}>
-          {liked ? <FavoriteIcon /> : <FavoriteIcon color='primary' />}
+          {liked ? <FavoriteIcon color='primary' /> : <FavoriteIcon />}
           <p>{likeCount}</p>
         </IconButton>
         <IconButton
@@ -118,7 +123,7 @@ export default function TweetCard({
           />
           <Button onClick={handleTweetReply}>Post Reply</Button>
           {replies?.map((r) => (
-            <div>
+            <div className={classes.replyBorder}>
               <Typography>{r.userId}</Typography>
               <Typography paragraph>{r.replyMsg}</Typography>
             </div>

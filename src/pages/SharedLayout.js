@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { Box } from '@material-ui/core';
 import pic from '../resources/blank.jpg';
 
 const Home = () => {
@@ -13,9 +12,7 @@ const Home = () => {
       <Navbar />
       <Grid container spacing={0}>
         <Grid item xs={3}>
-          <Box>
-            <img src={pic} alt='' />
-          </Box>
+          <img src={pic} alt='' />
         </Grid>
         <Grid item xs={6}>
           <Outlet />

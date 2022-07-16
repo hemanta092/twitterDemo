@@ -170,6 +170,12 @@ const tweetSlice = createSlice({
     [searchUserByUsername.fulfilled]: (state, action) => {
       state.searchUserResults = action.payload.data;
     },
+    [likeTweet.fulfilled]: (state, action) => {
+      state.tweets = [...state.tweets, action.payload.data];
+    },
+    [tweetReply.fulfilled]: (state, action) => {
+      state.tweets = [...state.tweets, action.payload.data];
+    },
   },
 });
 
