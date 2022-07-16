@@ -6,7 +6,7 @@ const addTweetUrl = 'http://localhost:8082/tweet/addTweet';
 const getMyTweetsUrl = 'http://localhost:8082/tweet/getTweetsByUserId';
 const getAllUsersUrl = 'http://localhost:8082/tweet/getAllUsers';
 const searchUserURL = 'http://localhost:8082/tweet/searchByUserName';
-const likeTweetURL = 'http://localhost:8082/likeTweet';
+const likeTweetURL = 'http://localhost:8082/tweet/likeTweet';
 const replyTweetURL = 'http://localhost:8082/tweet/replyTweet';
 
 const initialState = {
@@ -115,6 +115,7 @@ export const likeTweet = createAsyncThunk(
           Authorization: reqBody.token,
         },
       });
+      console.log(res);
       return res;
     } catch (err) {
       console.error(err);
@@ -171,10 +172,28 @@ const tweetSlice = createSlice({
       state.searchUserResults = action.payload.data;
     },
     [likeTweet.fulfilled]: (state, action) => {
-      state.tweets = [...state.tweets, action.payload.data];
+      //state.tweets.splice(0,action.payload.data.tweetId);
+      state.tweets = state.tweets.map(t=>{
+        if(t.tweetId===action.payload.data.tweetId){
+          t.hasLiked=action.payload.data.hasLiked;
+          t.tweetLikes=action.payload.data.tweetLikes;
+          t.tweetLikesCount = action.payload.data.tweetLikesCount;
+          t.updateDateTime = action.payload.data.tweetLikesCount;
+        }
+        return t;
+      })
+
+      //state.tweets = [state.tweets, action.payload.data];
     },
     [tweetReply.fulfilled]: (state, action) => {
-      state.tweets = [...state.tweets, action.payload.data];
+      state.tweets = state.tweets.map(t=>{
+        if(t.tweetId===action.payload.data.tweetId){
+          t.tweetReply=action.payload.data.tweetReply;
+          t.updateDateTime = action.payload.data.tweetLikesCount;
+        }
+        return t;
+      })
+      ///state.tweets = [...state.tweets, action.payload.data];
     },
   },
 });

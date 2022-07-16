@@ -12,7 +12,7 @@ const Home = () => {
       <Navbar />
       <Grid container spacing={0}>
         <Grid item xs={3}>
-          <img src={pic} alt='' />
+          <img src={pic} alt='' style={{maxWidth:"100%", maxHeight:"100%"}} />
         </Grid>
         <Grid item xs={6}>
           <Outlet />
@@ -24,7 +24,7 @@ const Home = () => {
             aria-label='vertical contained primary button group'
             variant='text'>
             <Link to='/'>
-              <Button>All Tweets Tweets</Button>
+              <Button>All Tweets</Button>
             </Link>
             <Link to='/my_tweets'>
               <Button>My Tweets</Button>
