@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: red[500],
   },
   replyBorder: {
-    border: '2px solid black',
+    borderBottom: '2px solid black',
   },
 }));
 
@@ -123,7 +123,7 @@ export default function TweetCard({
           />
           <Button onClick={handleTweetReply}>Post Reply</Button>
           {replies?.map((r) => (
-            <div className={classes.replyBorder}>
+            <div key = {r.userId} className={classes.replyBorder}>
               <Typography>{r.userId}</Typography>
               <Typography paragraph>{r.replyMsg}</Typography>
             </div>
