@@ -4,6 +4,7 @@ import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { signupRequest } from '../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +33,7 @@ const Signup = () => {
   const mobileRef = useRef(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -49,6 +51,7 @@ const Signup = () => {
         body: form,
       })
     );
+    navigate('/login');
   };
 
   return (
