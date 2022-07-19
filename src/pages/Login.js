@@ -2,6 +2,10 @@ import React from 'react';
 import './Login.css';
 import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
+import { IconButton } from '@material-ui/core';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import GitHubIcon from '@material-ui/icons/GitHub';
 // import { IconButton } from '@material-ui/core';
 // import TwitterIcon from '@mui/icons-material/Twitter';
 // import GoogleIcon from '@mui/icons-material/Google';
@@ -24,7 +28,7 @@ const Login = () => {
         />
         <FormButton title='Log in' />
       </div>
-      {/* <div id='alternativeLogin'>
+      <div id='alternativeLogin'>
         <label>Or sign in with:</label>
         <div id='iconGroup'>
           <IconButton id='facebookIcon'>
@@ -33,11 +37,11 @@ const Login = () => {
           <IconButton id='twitterIcon'>
             <TwitterIcon></TwitterIcon>
           </IconButton>
-          <IconButton id='googleIcon'>
-            <GoogleIcon></GoogleIcon>
+          <IconButton id='GitHubIcon'>
+            <GitHubIcon></GitHubIcon>
           </IconButton>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

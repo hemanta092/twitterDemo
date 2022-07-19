@@ -12,9 +12,36 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { likeTweet, tweetReply } from '../features/tweet/tweetSlice';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import {
+  deleteTweet,
+  editTweet,
+  likeTweet,
+  tweetReply,
+} from '../features/tweet/tweetSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, TextField } from '@material-ui/core';
+import { Button, Modal, Snackbar, TextField } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +67,14 @@ const useStyles = makeStyles((theme) => ({
   replyBorder: {
     borderBottom: '2px solid black',
   },
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 
 export default function TweetCard({
@@ -54,9 +89,22 @@ export default function TweetCard({
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [reply, setReply] = React.useState('');
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+  const [editedTweetText, setEditedTweetText] = React.useState('');
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
   const { token } = useSelector((state) => state.user);
+  const { tweets } = useSelector((state) => state.tweet);
   const dispatch = useDispatch();
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -69,6 +117,7 @@ export default function TweetCard({
         token,
       })
     );
+    setReply('');
   };
 
   const handleTweetReply = () => {
@@ -83,6 +132,50 @@ export default function TweetCard({
     );
   };
 
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackbarOpen(false);
+  };
+
+  const handleEditTweet = () => {
+    const t = tweets.find((item) => item.tweetId === id);
+    if (t) {
+      t.message = editedTweetText;
+      dispatch(
+        editTweet({
+          body: t,
+          token,
+        })
+      );
+    }
+  };
+
+  const handleDeleteTweet = () => {
+    dispatch(
+      deleteTweet({
+        tweetId: id,
+        token,
+      })
+    );
+    setSnackbarOpen(true);
+  };
+
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <h2 id='edit-tweet-modal'>Edit Tweet</h2>
+      <TextField
+        label='Reply'
+        variant='outlined'
+        value={text}
+        onChange={(e) => setEditedTweetText(e.target.value)}
+      />
+      <Button onClick={handleEditTweet}>Submit</Button>
+    </div>
+  );
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -94,6 +187,13 @@ export default function TweetCard({
         title={displayName}
         subheader={username}
       />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='edit-tweet'
+        aria-describedby='edit-tweet-description'>
+        {body}
+      </Modal>
       <CardContent>
         <Typography variant='body2' color='textSecondary' component='p'>
           {text}
@@ -113,17 +213,32 @@ export default function TweetCard({
           aria-label='show more'>
           <ExpandMoreIcon />
         </IconButton>
+        <IconButton aria-label='Edit Tweet' onClick={handleOpen}>
+          <EditIcon />
+        </IconButton>
+        <IconButton aria-label='Delete Tweet' onClick={handleDeleteTweet}>
+          <DeleteIcon />
+          <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={6000}
+            onClose={handleSnackbarClose}>
+            <Alert onClose={handleSnackbarClose} severity='error'>
+              Tweet Deleted!
+            </Alert>
+          </Snackbar>
+        </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
           <TextField
             label='Reply'
             variant='outlined'
+            value={reply}
             onChange={(e) => setReply(e.target.value)}
           />
           <Button onClick={handleTweetReply}>Post Reply</Button>
           {replies?.map((r) => (
-            <div key = {r.userId} className={classes.replyBorder}>
+            <div key={r.userId} className={classes.replyBorder}>
               <Typography>{r.userId}</Typography>
               <Typography paragraph>{r.replyMsg}</Typography>
             </div>

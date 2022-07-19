@@ -8,6 +8,8 @@ const getAllUsersUrl = 'http://localhost:8082/tweet/getAllUsers';
 const searchUserURL = 'http://localhost:8082/tweet/searchByUserName';
 const likeTweetURL = 'http://localhost:8082/tweet/likeTweet';
 const replyTweetURL = 'http://localhost:8082/tweet/replyTweet';
+const editTweetURL = 'http://localhost:8082/tweet/updateTweet';
+const deleteTweetURL = 'http://localhost:8082/tweet/deleteTweet';
 
 const initialState = {
   isLoading: false,
@@ -140,6 +142,32 @@ export const tweetReply = createAsyncThunk('tweetReply', async (reqBody) => {
   }
 });
 
+export const editTweet = createAsyncThunk('editTweet', async (reqBody) => {
+  try {
+    const res = await axios.post(editTweetURL, reqBody.body, {
+      headers: {
+        Authorization: reqBody.token,
+      },
+    });
+    return res;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+export const deleteTweet = createAsyncThunk('deleteTweet', async (reqBody) => {
+  try {
+    const res = axios.get(`${deleteTweetURL}/${reqBody.tweetId}`, {
+      headers: {
+        Authorization: reqBody.token,
+      },
+    });
+    return res;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 const tweetSlice = createSlice({
   name: 'tweet',
   initialState,
@@ -173,27 +201,41 @@ const tweetSlice = createSlice({
     },
     [likeTweet.fulfilled]: (state, action) => {
       //state.tweets.splice(0,action.payload.data.tweetId);
-      state.tweets = state.tweets.map(t=>{
-        if(t.tweetId===action.payload.data.tweetId){
-          t.hasLiked=action.payload.data.hasLiked;
-          t.tweetLikes=action.payload.data.tweetLikes;
+      state.tweets = state.tweets.map((t) => {
+        if (t.tweetId === action.payload.data.tweetId) {
+          t.hasLiked = action.payload.data.hasLiked;
+          t.tweetLikes = action.payload.data.tweetLikes;
           t.tweetLikesCount = action.payload.data.tweetLikesCount;
           t.updateDateTime = action.payload.data.tweetLikesCount;
         }
         return t;
-      })
+      });
 
       //state.tweets = [state.tweets, action.payload.data];
     },
     [tweetReply.fulfilled]: (state, action) => {
-      state.tweets = state.tweets.map(t=>{
-        if(t.tweetId===action.payload.data.tweetId){
-          t.tweetReply=action.payload.data.tweetReply;
+      state.tweets = state.tweets.map((t) => {
+        if (t.tweetId === action.payload.data.tweetId) {
+          t.tweetReply = action.payload.data.tweetReply;
           t.updateDateTime = action.payload.data.tweetLikesCount;
         }
         return t;
-      })
+      });
       ///state.tweets = [...state.tweets, action.payload.data];
+    },
+    [editTweet.fulfilled]: (state, action) => {
+      state.tweets = state.tweets.map((t) => {
+        if (t.tweetId === action.payload.data.tweetId) {
+          t.message = action.payload.data.message;
+          t.updateDateTime = action.payload.data.tweetLikesCount;
+        }
+        return t;
+      });
+    },
+    [deleteTweet.fulfilled]: (state, action) => {
+      state.tweets = state.tweets.filter(
+        (item) => item.tweetId !== action.payload.data.tweetId
+      );
     },
   },
 });

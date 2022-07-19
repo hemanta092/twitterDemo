@@ -5,14 +5,21 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import pic from '../resources/blank.jpg';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
+  const { user } = useSelector((state) => state.user);
   return (
     <>
       <Navbar />
       <Grid container spacing={0}>
         <Grid item xs={3}>
-          <img src={pic} alt='' style={{maxWidth:"100%", maxHeight:"100%"}} />
+          <img
+            src={pic}
+            alt=''
+            style={{ maxWidth: '100%', maxHeight: '100%' }}
+          />
+          <h3>{user.firstName}</h3>
         </Grid>
         <Grid item xs={6}>
           <Outlet />

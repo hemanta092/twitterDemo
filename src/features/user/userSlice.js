@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const loginurl = 'http://localhost:8081/auth/login';
 const getUserUrl = 'http://localhost:8081/auth/validate';
+const signupURL = 'http://localhost:8081/auth/register';
 
 const initialState = {
   user: [],
@@ -52,6 +53,18 @@ export const getUser = createAsyncThunk(
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue('something went wrong');
+    }
+  }
+);
+
+export const signupRequest = createAsyncThunk(
+  'signupRequest',
+  async (reqBody) => {
+    try {
+      const res = await axios.post(signupURL, reqBody.body);
+      return res;
+    } catch (err) {
+      console.error(err);
     }
   }
 );

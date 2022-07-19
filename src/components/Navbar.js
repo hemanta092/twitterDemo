@@ -34,14 +34,17 @@ const Navbar = () => {
       <AppBar position='static'>
         <Toolbar className={classes.flexSpaceBetween}>
           <TwitterIcon />
-          <Link to='/login'>
-            {isLoggedIn ? (
-              <Button variant='outlined'>Sign Out</Button>
-            ) : (
-              <Button variant='outlined'>Login</Button>
-            )}
-            {/* <Button variant='outlined'>Login</Button> */}
-          </Link>
+          <div>
+            {isLoggedIn ? null : <Link to='/signup'>Sign Up</Link>}
+            <Link to='/login'>
+              {isLoggedIn ? (
+                <Button variant='outlined'>Sign Out</Button>
+              ) : (
+                <Button variant='outlined'>Login</Button>
+              )}
+              {/* <Button variant='outlined'>Login</Button> */}
+            </Link>
+          </div>
         </Toolbar>
       </AppBar>
     </div>
