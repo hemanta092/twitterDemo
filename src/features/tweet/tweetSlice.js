@@ -227,7 +227,6 @@ const tweetSlice = createSlice({
       state.tweets = state.tweets.map((t) => {
         if (t.tweetId === action.payload.data.tweetId) {
           t.message = action.payload.data.message;
-          t.updateDateTime = action.payload.data.tweetLikesCount;
         }
         return t;
       });

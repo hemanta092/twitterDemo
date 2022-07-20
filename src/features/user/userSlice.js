@@ -9,7 +9,7 @@ const getUserUrl = 'http://localhost:8081/auth/validate';
 const signupURL = 'http://localhost:8081/auth/register';
 
 const initialState = {
-  user: [],
+  user: {},
   isLoggedIn: false,
   isLoading: false,
   userId: '',
@@ -58,8 +58,9 @@ export const getUser = createAsyncThunk(
 );
 
 export const signupRequest = createAsyncThunk(
-  'signupRequest',
+  'user/signupRequest',
   async (reqBody) => {
+    console.log(reqBody);
     try {
       const res = await axios.post(signupURL, reqBody.body);
       return res;
@@ -86,6 +87,7 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.isLoggedIn = true;
       state.userId = action.payload.userId;
+      state.user.name = action.payload.userName;
       state.token = `Bearer ${action.payload.authToken}`;
     },
     [loginRequest.rejected]: (state, action) => {

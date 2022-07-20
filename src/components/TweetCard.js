@@ -91,13 +91,13 @@ export default function TweetCard({
   const [reply, setReply] = React.useState('');
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-  const [editedTweetText, setEditedTweetText] = React.useState('');
+  const [editedTweetText, setEditedTweetText] = React.useState(text);
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
   const { token } = useSelector((state) => state.user);
   const { tweets } = useSelector((state) => state.tweet);
   const dispatch = useDispatch();
-
+  //const theDate = new Date(time).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'});
   const handleOpen = () => {
     setOpen(true);
   };
@@ -141,16 +141,20 @@ export default function TweetCard({
   };
 
   const handleEditTweet = () => {
-    const t = tweets.find((item) => item.tweetId === id);
+    let t = tweets.find((item) => item.tweetId === id);
+    console.log(t);
     if (t) {
-      t.message = editedTweetText;
+      let x = JSON.parse(JSON.stringify(t));//Object.assign(x, JSON.parse(JSON.stringify(t)));
+      x.message = editedTweetText;
+      console.log(t);
       dispatch(
         editTweet({
-          body: t,
+          body: x,
           token,
         })
       );
     }
+    setOpen(false);
   };
 
   const handleDeleteTweet = () => {
@@ -169,7 +173,7 @@ export default function TweetCard({
       <TextField
         label='Reply'
         variant='outlined'
-        value={text}
+        value={editedTweetText}
         onChange={(e) => setEditedTweetText(e.target.value)}
       />
       <Button onClick={handleEditTweet}>Submit</Button>
@@ -239,8 +243,10 @@ export default function TweetCard({
           <Button onClick={handleTweetReply}>Post Reply</Button>
           {replies?.map((r) => (
             <div key={r.userId} className={classes.replyBorder}>
-              <Typography>{r.userId}</Typography>
-              <Typography paragraph>{r.replyMsg}</Typography>
+              <Typography color='primary'>{r.userId}</Typography>
+              <Typography >{r.replyMsg}</Typography>
+              <Typography variant="caption" align='right' >{new Date(r.creationTime).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</Typography>
+
             </div>
           ))}
         </CardContent>
