@@ -26,6 +26,22 @@ const AllUsers = () => {
 
   const classes = useStyles();
 
+  const convertTime = (time) => {
+    const theDate = new Date(time).toLocaleString();
+    const now = new Date().toLocaleString();
+    const diffTime = new Date(now) - new Date(theDate);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const diffMin = Math.floor(diffTime / (1000 * 60));
+    const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+    return diffDays > 0
+      ? `${diffDays} Days Ago`
+      : diffHours > 0
+      ? `${diffHours} Hours Ago`
+      : diffMin > 0
+      ? `${diffMin} Minutes Ago`
+      : `${diffTime} Miliseconds Ago`;
+  };
+
   return (
     <>
       <h1>All Users</h1>
@@ -33,8 +49,9 @@ const AllUsers = () => {
         <List className={classes.root}>
           <ListItem>
             <ListItemAvatar>
-              <Avatar>R</Avatar>
+              <Avatar>{user.firstName}</Avatar>
             </ListItemAvatar>
+            <h3>{convertTime(user.lastSeen)}</h3>
             <ListItemText primary={user.userId} secondary={user.firstName} />
           </ListItem>
         </List>

@@ -23,9 +23,14 @@ const MyTweets = () => {
         {myTweets?.map((tweet) => (
           <Grid item md key={tweet.id}>
             <TweetCard
+              id={tweet.tweetId}
               displayName={tweet.createdByName}
               username={tweet.createdById}
               text={tweet.message}
+              liked={tweet.hasLiked}
+              likeCount={tweet.tweetLikesCount}
+              replies={tweet.tweetReply}
+              myTweet='true'
             />
           </Grid>
         ))}

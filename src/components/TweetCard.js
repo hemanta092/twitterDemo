@@ -23,6 +23,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal, Snackbar, TextField } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
+import MyTweets from '../pages/MyTweets';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -85,6 +86,7 @@ export default function TweetCard({
   liked,
   likeCount,
   replies,
+  myTweet,
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -144,7 +146,7 @@ export default function TweetCard({
     let t = tweets.find((item) => item.tweetId === id);
     console.log(t);
     if (t) {
-      let x = JSON.parse(JSON.stringify(t));//Object.assign(x, JSON.parse(JSON.stringify(t)));
+      let x = JSON.parse(JSON.stringify(t)); //Object.assign(x, JSON.parse(JSON.stringify(t)));
       x.message = editedTweetText;
       console.log(t);
       dispatch(
@@ -217,20 +219,24 @@ export default function TweetCard({
           aria-label='show more'>
           <ExpandMoreIcon />
         </IconButton>
-        <IconButton aria-label='Edit Tweet' onClick={handleOpen}>
-          <EditIcon />
-        </IconButton>
-        <IconButton aria-label='Delete Tweet' onClick={handleDeleteTweet}>
-          <DeleteIcon />
-          <Snackbar
-            open={snackbarOpen}
-            autoHideDuration={6000}
-            onClose={handleSnackbarClose}>
-            <Alert onClose={handleSnackbarClose} severity='error'>
-              Tweet Deleted!
-            </Alert>
-          </Snackbar>
-        </IconButton>
+        {MyTweets ? (
+          <div>
+            <IconButton aria-label='Edit Tweet' onClick={handleOpen}>
+              <EditIcon />
+            </IconButton>
+            <IconButton aria-label='Delete Tweet' onClick={handleDeleteTweet}>
+              <DeleteIcon />
+              <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity='error'>
+                  Tweet Deleted!
+                </Alert>
+              </Snackbar>
+            </IconButton>
+          </div>
+        ) : null}
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
@@ -244,9 +250,12 @@ export default function TweetCard({
           {replies?.map((r) => (
             <div key={r.userId} className={classes.replyBorder}>
               <Typography color='primary'>{r.userId}</Typography>
-              <Typography >{r.replyMsg}</Typography>
-              <Typography variant="caption" align='right' >{new Date(r.creationTime).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})}</Typography>
-
+              <Typography>{r.replyMsg}</Typography>
+              <Typography variant='caption' align='right'>
+                {new Date(r.creationTime).toLocaleString(undefined, {
+                  timeZone: 'Asia/Kolkata',
+                })}
+              </Typography>
             </div>
           ))}
         </CardContent>
