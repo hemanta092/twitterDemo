@@ -30,7 +30,7 @@ const MyTweets = () => {
               liked={tweet.hasLiked}
               likeCount={tweet.tweetLikesCount}
               replies={tweet.tweetReply}
-              myTweet='true'
+              myTweet={true}
             />
           </Grid>
         ))}

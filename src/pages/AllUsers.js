@@ -39,7 +39,7 @@ const AllUsers = () => {
       ? `${diffHours} Hours Ago`
       : diffMin > 0
       ? `${diffMin} Minutes Ago`
-      : `${diffTime} Miliseconds Ago`;
+      : `1 Minutes Ago`;
   };
 
   return (
@@ -49,10 +49,11 @@ const AllUsers = () => {
         <List className={classes.root}>
           <ListItem>
             <ListItemAvatar>
-              <Avatar>{user.firstName}</Avatar>
+              <Avatar>{user.firstName.charAt(0).toUpperCase()}</Avatar>
             </ListItemAvatar>
-            <h3>{convertTime(user.lastSeen)}</h3>
-            <ListItemText primary={user.userId} secondary={user.firstName} />
+            
+            <ListItemText primary={user.userId} secondary={user.firstName+" "+user.lastName} />
+            <span>{user.active?'Online' : convertTime(user.lastSeen)}</span>
           </ListItem>
         </List>
       ))}

@@ -44,6 +44,7 @@ function Feed() {
                 liked={post.hasLiked}
                 likeCount={post.tweetLikesCount}
                 replies={post.tweetReply}
+                myTweet={false}
               />
             </Grid>
           ))}

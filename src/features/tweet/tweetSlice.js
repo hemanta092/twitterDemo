@@ -200,7 +200,6 @@ const tweetSlice = createSlice({
       state.searchUserResults = action.payload.data;
     },
     [likeTweet.fulfilled]: (state, action) => {
-      //state.tweets.splice(0,action.payload.data.tweetId);
       state.tweets = state.tweets.map((t) => {
         if (t.tweetId === action.payload.data.tweetId) {
           t.hasLiked = action.payload.data.hasLiked;
@@ -211,7 +210,15 @@ const tweetSlice = createSlice({
         return t;
       });
 
-      //state.tweets = [state.tweets, action.payload.data];
+      state.myTweets = state.myTweets.map((t) => {
+        if (t.tweetId === action.payload.data.tweetId) {
+          t.hasLiked = action.payload.data.hasLiked;
+          t.tweetLikes = action.payload.data.tweetLikes;
+          t.tweetLikesCount = action.payload.data.tweetLikesCount;
+          t.updateDateTime = action.payload.data.tweetLikesCount;
+        }
+        return t;
+      });
     },
     [tweetReply.fulfilled]: (state, action) => {
       state.tweets = state.tweets.map((t) => {
@@ -221,10 +228,22 @@ const tweetSlice = createSlice({
         }
         return t;
       });
-      ///state.tweets = [...state.tweets, action.payload.data];
+      state.myTweets = state.myTweets.map((t) => {
+        if (t.tweetId === action.payload.data.tweetId) {
+          t.tweetReply = action.payload.data.tweetReply;
+          t.updateDateTime = action.payload.data.tweetLikesCount;
+        }
+        return t;
+      });
     },
     [editTweet.fulfilled]: (state, action) => {
       state.tweets = state.tweets.map((t) => {
+        if (t.tweetId === action.payload.data.tweetId) {
+          t.message = action.payload.data.message;
+        }
+        return t;
+      });
+      state.myTweets = state.myTweets.map((t) => {
         if (t.tweetId === action.payload.data.tweetId) {
           t.message = action.payload.data.message;
         }
@@ -235,6 +254,10 @@ const tweetSlice = createSlice({
       state.tweets = state.tweets.filter(
         (item) => item.tweetId !== action.payload.data.tweetId
       );
+      state.myTweets = state.myTweets.filter(
+        (item) => item.tweetId !== action.payload.data.tweetId
+      );
+      
     },
   },
 });

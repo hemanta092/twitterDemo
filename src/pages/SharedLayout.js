@@ -19,8 +19,7 @@ const Home = () => {
             alt=''
             style={{ maxWidth: '100%', maxHeight: '100%' }}
           />
-          <h3>{user.name}</h3>
-          {console.log(user)}
+          <h2>{user.name}</h2>
         </Grid>
         <Grid item xs={6}>
           <Outlet />

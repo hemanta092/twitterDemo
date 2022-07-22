@@ -219,7 +219,7 @@ export default function TweetCard({
           aria-label='show more'>
           <ExpandMoreIcon />
         </IconButton>
-        {MyTweets ? (
+        {myTweet ? (
           <div>
             <IconButton aria-label='Edit Tweet' onClick={handleOpen}>
               <EditIcon />
