@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import MyTweets from './pages/MyTweets';
 import AllUsers from './pages/AllUsers';
 import SearchUser from './pages/SearchUser';
+import Signup from './pages/Signup';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route path='search_users' element={<SearchUser />} />
         </Route>
         <Route path='/login' exact element={<Login></Login>} />
-        <Route path='/signup' exact element={<Login></Login>} />
+        <Route path='/signup' exact element={<Signup></Signup>} />
       </Routes>
     </BrowserRouter>
   );

@@ -6,6 +6,7 @@ import { IconButton } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import { Link } from 'react-router-dom';
 // import { IconButton } from '@material-ui/core';
 // import TwitterIcon from '@mui/icons-material/Twitter';
 // import GoogleIcon from '@mui/icons-material/Google';
@@ -29,6 +30,7 @@ const Login = () => {
         <FormButton title='Log in' />
       </div>
       <div id='alternativeLogin'>
+        <Link to='/signup'>SignUp </Link>
         <label>Or sign in with:</label>
         <div id='iconGroup'>
           <IconButton id='facebookIcon'>

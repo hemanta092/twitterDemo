@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Login.css';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = () => {
   const classes = useStyles();
-  const { form, setForm } = useState({});
+  const [form, setForm ] = useState({});
 
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
@@ -44,15 +44,19 @@ const Signup = () => {
       lastName: lastNameRef.current.value,
       dateOfBirth: dobRef.current.value,
       gender: genderRef.current.value,
-      mobileNo: genderRef.current.value,
+      mobileNo: mobileRef.current.value,
+      
     });
+  };
+
+  useEffect(()=>{
     dispatch(
       signupRequest({
         body: form,
       })
     );
-    navigate('/login');
-  };
+    //navigate('/login');
+  },[form,dispatch]);
 
   return (
     <div id='loginform'>
@@ -68,15 +72,17 @@ const Signup = () => {
           label='First Name'
           variant='outlined'
         />
-        <TextField id='lastname' label='Last Name' variant='outlined' />
+        <TextField id='lastname' inputRef={lastNameRef} label='Last Name' variant='outlined' />
         <TextField
           id='password'
+          inputRef={passwordRef}
           label='Password'
           type='password'
           variant='outlined'
         />
         <TextField
           id='dob'
+          inputRef={dobRef}
           label='Date of Birth'
           type='date'
           variant='outlined'
@@ -84,14 +90,14 @@ const Signup = () => {
             shrink: true,
           }}
         />
-        <TextField id='gender' label='Gender' variant='outlined' />
+        <TextField id='gender' inputRef={genderRef} label='Gender' variant='outlined' />
         <TextField
           inputRef={mobileRef}
           id='mobile'
           label='Mobile Number'
           variant='outlined'
         />
-        <TextField id='email' type='email' label='Email' variant='outlined' />
+        <TextField id='email' inputRef={emailRef} type='email' label='Email' variant='outlined' />
         <Button type='submit' variant='contained' color='primary'>
           Sign Up
         </Button>
