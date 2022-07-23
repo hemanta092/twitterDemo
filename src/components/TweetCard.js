@@ -6,7 +6,13 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import {ListItem,ListItemText,Typography,IconButton,Card} from '@material-ui/core';
+import {
+  ListItem,
+  ListItemText,
+  Typography,
+  IconButton,
+  Card,
+} from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -22,7 +28,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal, Snackbar, TextField } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
-import MyTweets from '../pages/MyTweets';
+import { useSnackbar } from 'notistack';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -43,10 +49,34 @@ function getModalStyle() {
   };
 }
 
-var colors= ['aqua', 'blanchedalmond', 'blue', 'fuchsia', 'gold', 'green', 
-'lime', 'coral', 'navy', 'olive', 'orange', 'mediumpurple', 'orangered', 
-'silver', 'teal', 'deepskyblue', 'yellow','lightsalmon','palegreen','pink','plum',
-'tomato','violet','olivedrab','moccasin','lawngreen'];
+var colors = [
+  'aqua',
+  'blanchedalmond',
+  'blue',
+  'fuchsia',
+  'gold',
+  'green',
+  'lime',
+  'coral',
+  'navy',
+  'olive',
+  'orange',
+  'mediumpurple',
+  'orangered',
+  'silver',
+  'teal',
+  'deepskyblue',
+  'yellow',
+  'lightsalmon',
+  'palegreen',
+  'pink',
+  'plum',
+  'tomato',
+  'violet',
+  'olivedrab',
+  'moccasin',
+  'lawngreen',
+];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,17 +102,17 @@ const useStyles = makeStyles((theme) => ({
   replyBorder: {
     boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
   },
-  replydiv:{
-    marginBottom : '25px',
+  replydiv: {
+    marginBottom: '25px',
   },
-  replyfield:{
+  replyfield: {
     width: '78%',
     height: '50px',
-    marginRight : '2%',
+    marginRight: '2%',
   },
-  replybutton:{
+  replybutton: {
     height: '55px',
-    width : '20%',
+    width: '20%',
   },
   paper: {
     position: 'absolute',
@@ -115,6 +145,9 @@ export default function TweetCard({
   const { token } = useSelector((state) => state.user);
   const { tweets } = useSelector((state) => state.tweet);
   const dispatch = useDispatch();
+
+  const { enqueueSnackbar } = useSnackbar();
+
   //const theDate = new Date(time).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'});
   const handleOpen = () => {
     setOpen(true);
@@ -139,16 +172,21 @@ export default function TweetCard({
   };
 
   const handleTweetReply = () => {
-    dispatch(
-      tweetReply({
-        tweetId: id,
-        body: {
-          replyMsg: reply,
-        },
-        token,
-      })
-    );
-    setReply('');
+    if (reply.length !== 0) {
+      dispatch(
+        tweetReply({
+          tweetId: id,
+          body: {
+            replyMsg: reply,
+          },
+          token,
+        })
+      );
+      setReply('');
+    } else {
+      const variant = 'warning';
+      enqueueSnackbar('Please enter tweet reply!', { variant });
+    }
   };
 
   const handleSnackbarClose = (event, reason) => {
@@ -204,7 +242,15 @@ export default function TweetCard({
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label='recipe' style ={{backgroundColor : colors[displayName.charAt(0).toUpperCase().charCodeAt(0)-'A'.charCodeAt(0)]}}>
+          <Avatar
+            aria-label='recipe'
+            style={{
+              backgroundColor:
+                colors[
+                  displayName.charAt(0).toUpperCase().charCodeAt(0) -
+                    'A'.charCodeAt(0)
+                ],
+            }}>
             {displayName.charAt(0).toUpperCase()}
           </Avatar>
         }
@@ -259,31 +305,36 @@ export default function TweetCard({
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
           <div className={classes.replydiv}>
-          <TextField
-            className= {classes.replyfield}
-            label='Reply'
-            variant='outlined'
-            value={reply}
-            onChange={(e) => setReply(e.target.value)}
-          />
-          <Button className= {classes.replybutton} variant="contained" color='primary' onClick={handleTweetReply}>Post Reply</Button>
+            <TextField
+              className={classes.replyfield}
+              label='Reply'
+              variant='outlined'
+              value={reply}
+              onChange={(e) => setReply(e.target.value)}
+            />
+            <Button
+              className={classes.replybutton}
+              variant='contained'
+              color='primary'
+              onClick={handleTweetReply}>
+              Post Reply
+            </Button>
           </div>
           {replies?.map((r) => (
-            <div key={r.userId} >
-              <ListItem className = {classes.replyBorder}>
-              <ListItemText secondary={r.userId} primary = {r.replyMsg}/>
-              <span>
-                {new Date(r.creationTime).toLocaleString(undefined, {
-                  timeZone: 'Asia/Kolkata',
-                })}
-              </span>
+            <div key={r.userId}>
+              <ListItem className={classes.replyBorder}>
+                <ListItemText secondary={r.userId} primary={r.replyMsg} />
+                <span>
+                  {new Date(r.creationTime).toLocaleString(undefined, {
+                    timeZone: 'Asia/Kolkata',
+                  })}
+                </span>
               </ListItem>
             </div>
           ))}
         </CardContent>
       </Collapse>
-      <Divider light/>
+      <Divider light />
     </Card>
-    
   );
 }

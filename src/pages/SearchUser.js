@@ -10,7 +10,7 @@ import {
   ListItemText,
   TextField,
 } from '@material-ui/core';
-import './SearchUser.css' 
+import './SearchUser.css';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchUserByUsername } from '../features/tweet/tweetSlice';
@@ -48,15 +48,38 @@ const SearchUser = () => {
     setUserInput(e.target.value);
   };
 
-var colors= ['aqua', 'blanchedalmond', 'blue', 'fuchsia', 'gold', 'green', 
-'lime', 'coral', 'navy', 'olive', 'orange', 'mediumpurple', 'orangered', 
-'silver', 'teal', 'deepskyblue', 'yellow','lightsalmon','palegreen','pink','plum',
-'tomato','violet','olivedrab','moccasin','lawngreen'];
-  
+  var colors = [
+    'aqua',
+    'blanchedalmond',
+    'blue',
+    'fuchsia',
+    'gold',
+    'green',
+    'lime',
+    'coral',
+    'navy',
+    'olive',
+    'orange',
+    'mediumpurple',
+    'orangered',
+    'silver',
+    'teal',
+    'deepskyblue',
+    'yellow',
+    'lightsalmon',
+    'palegreen',
+    'pink',
+    'plum',
+    'tomato',
+    'violet',
+    'olivedrab',
+    'moccasin',
+    'lawngreen',
+  ];
 
   return (
-    <Container >
-      <h1 className = 'searchuser'>Search User</h1>
+    <Container>
+      <h1 className='searchuser'>Search User</h1>
       <Grid
         container
         direction='row'
@@ -69,7 +92,7 @@ var colors= ['aqua', 'blanchedalmond', 'blue', 'fuchsia', 'gold', 'green',
             size='small'
             fullWidth
             onChange={searchUserInputHandler}
-            style={{width :'96%'}}
+            style={{ width: '96%' }}
           />
         </Grid>
         <Grid item xs>
@@ -85,19 +108,34 @@ var colors= ['aqua', 'blanchedalmond', 'blue', 'fuchsia', 'gold', 'green',
         justifyContent='space-evenly'
         alignItems='stretch'>
         {searchUserResults === undefined || searchUserResults.length === 0 ? (
-          <h2 className = 'noUser'> No User Found</h2>
+          <h2 className='noUser'> No User Found</h2>
         ) : (
           searchUserResults.map((user) => (
             <Grid item md>
               <List>
                 <ListItem className='listItem'>
                   <ListItemAvatar>
-                    <Avatar style ={{backgroundColor : colors[user.firstName.charAt(0).toUpperCase().charCodeAt(0)-'A'.charCodeAt(0)]}}>
-                      {user.firstName.charAt(0).toUpperCase()}</Avatar>
+                    <Avatar
+                      style={{
+                        backgroundColor:
+                          colors[
+                            user.firstName
+                              .charAt(0)
+                              .toUpperCase()
+                              .charCodeAt(0) - 'A'.charCodeAt(0)
+                          ],
+                      }}>
+                      {user.firstName.charAt(0).toUpperCase()}
+                    </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={user.userId} secondary={user.firstName+" "+user.lastName} />
-                  <span className={'status' + (user.active?'Online' : 'Offline')}>
-                    {user.active?'Online' : convertTime(user.lastSeen)}</span>
+                  <ListItemText
+                    primary={user.userId}
+                    secondary={user.firstName + ' ' + user.lastName}
+                  />
+                  <span
+                    className={'status' + (user.active ? 'Online' : 'Offline')}>
+                    {user.active ? 'Online' : convertTime(user.lastSeen)}
+                  </span>
                 </ListItem>
               </List>
             </Grid>

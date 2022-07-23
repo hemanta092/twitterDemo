@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSnackbar } from 'notistack';
 import './TweetBox.css';
 import { Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,20 +7,32 @@ import { addTweet } from './features/tweet/tweetSlice';
 
 function TweetBox() {
   const [tweetMessage, setTweetMessage] = useState('');
+  const [tweetTag, setTweetTag] = useState('');
+
   const { token } = useSelector((state) => state.user);
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const dispatch = useDispatch();
 
   const sendTweet = (e) => {
     e.preventDefault();
-    const data = {
-      body: {
-        message: tweetMessage,
-      },
-      token,
-    };
-    dispatch(addTweet(data));
-    setTweetMessage('');
+    if (tweetMessage.length !== 0) {
+      const variant = 'success';
+      const data = {
+        body: {
+          message: tweetMessage,
+          tag: tweetTag,
+        },
+        token,
+      };
+      dispatch(addTweet(data));
+      setTweetMessage('');
+      enqueueSnackbar('Tweeted Posted Successfully', { variant });
+    } else {
+      const variant = 'warning';
+      enqueueSnackbar('Tweet cannot be empty', { variant });
+    }
   };
 
   return (
@@ -33,6 +46,15 @@ function TweetBox() {
             type='text'
             maxLength='144'
             autoFocus
+          />
+        </div>
+        <div className='tweetBox__input'>
+          <input
+            onChange={(e) => setTweetTag(e.target.value)}
+            value={tweetTag}
+            placeholder='#trending'
+            type='text'
+            maxLength='144'
           />
         </div>
 
