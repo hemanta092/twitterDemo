@@ -12,7 +12,19 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
+    
   },
+  boxShadow :{
+    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+  },
+  statusOnline :{
+    color: 'green',
+    fontWeight: 'bold',
+},
+statusOffline :{
+    color: 'red',
+    fontWeight: 'bold',
+}
 }));
 
 const AllUsers = () => {
@@ -44,16 +56,17 @@ const AllUsers = () => {
 
   return (
     <>
-      <h1>All Users</h1>
+      <h1 style={{textAlign:'center'}}>All Users</h1>
       {allUsers?.map((user) => (
         <List className={classes.root}>
-          <ListItem>
+          <ListItem className={classes.boxShadow}>
             <ListItemAvatar>
               <Avatar>{user.firstName.charAt(0).toUpperCase()}</Avatar>
             </ListItemAvatar>
             
             <ListItemText primary={user.userId} secondary={user.firstName+" "+user.lastName} />
-            <span>{user.active?'Online' : convertTime(user.lastSeen)}</span>
+            {user.active?(<span className={classes.statusOnline}>Online</span>):
+            (<span className={classes.statusOffline}>{convertTime(user.lastSeen)}</span>)}
           </ListItem>
         </List>
       ))}

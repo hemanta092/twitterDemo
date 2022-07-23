@@ -1,19 +1,18 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import {ListItem,ListItemText,Typography,IconButton,Card} from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import Divider from '@mui/material/Divider';
 import {
   deleteTweet,
   editTweet,
@@ -66,7 +65,19 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: red[500],
   },
   replyBorder: {
-    borderBottom: '2px solid black',
+    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+  },
+  replydiv:{
+    marginBottom : '25px',
+  },
+  replyfield:{
+    width: '78%',
+    height: '50px',
+    marginRight : '2%',
+  },
+  replybutton:{
+    height: '55px',
+    width : '20%',
   },
   paper: {
     position: 'absolute',
@@ -132,6 +143,7 @@ export default function TweetCard({
         token,
       })
     );
+    setReply('');
   };
 
   const handleSnackbarClose = (event, reason) => {
@@ -146,7 +158,7 @@ export default function TweetCard({
     let t = tweets.find((item) => item.tweetId === id);
     console.log(t);
     if (t) {
-      let x = JSON.parse(JSON.stringify(t)); //Object.assign(x, JSON.parse(JSON.stringify(t)));
+      let x = JSON.parse(JSON.stringify(t));
       x.message = editedTweetText;
       console.log(t);
       dispatch(
@@ -172,6 +184,7 @@ export default function TweetCard({
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id='edit-tweet-modal'>Edit Tweet</h2>
+
       <TextField
         label='Reply'
         variant='outlined'
@@ -207,7 +220,7 @@ export default function TweetCard({
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='Like Tweet' onClick={handleLikeTweet}>
-          {liked ? <FavoriteIcon color='primary' /> : <FavoriteIcon />}
+          {liked ? <FavoriteIcon color='secondary' /> : <FavoriteIcon />}
           <p>{likeCount}</p>
         </IconButton>
         <IconButton
@@ -240,26 +253,32 @@ export default function TweetCard({
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
+          <div className={classes.replydiv}>
           <TextField
+            className= {classes.replyfield}
             label='Reply'
             variant='outlined'
             value={reply}
             onChange={(e) => setReply(e.target.value)}
           />
-          <Button onClick={handleTweetReply}>Post Reply</Button>
+          <Button className= {classes.replybutton} variant="contained" color='primary' onClick={handleTweetReply}>Post Reply</Button>
+          </div>
           {replies?.map((r) => (
-            <div key={r.userId} className={classes.replyBorder}>
-              <Typography color='primary'>{r.userId}</Typography>
-              <Typography>{r.replyMsg}</Typography>
-              <Typography variant='caption' align='right'>
+            <div key={r.userId} >
+              <ListItem className = {classes.replyBorder}>
+              <ListItemText secondary={r.userId} primary = {r.replyMsg}/>
+              <span>
                 {new Date(r.creationTime).toLocaleString(undefined, {
                   timeZone: 'Asia/Kolkata',
                 })}
-              </Typography>
+              </span>
+              </ListItem>
             </div>
           ))}
         </CardContent>
       </Collapse>
+      <Divider light/>
     </Card>
+    
   );
 }
