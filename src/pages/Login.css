@@ -11,20 +11,23 @@ html {
 }
 
 #loginform {
-    max-width: 500px;
-    min-width: 300px;
-    max-height: 700px;
-    width: 30%;
-    height: 60%;
-    margin: 100px auto;
+    width: 60%;
     background-color: #FFFFFF;
-    border-radius: 25px;
+    display: inline-block;
+}
+
+.logoimage{
+    height: 30rem;
+    width: 30rem;
+    display: block;
+    margin: 0 auto;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 #headerTitle {
     text-align: center;
     font-family: 'open sans', sans-serif;
-    padding: 2rem 0;
+    
     margin: 0;
     font-size: 2rem;
 }
@@ -127,5 +130,4 @@ html {
 #alternativeLogin {
     text-align: center;
     padding-top: 2rem;
-    margin-top: 1.5rem;
 }
