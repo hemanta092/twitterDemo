@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import pic from '../resources/blank.jpg';
 import { useSelector } from 'react-redux';
+import './SharedLayout.css'
 
 const Home = () => {
   const { user } = useSelector((state) => state.user);
@@ -17,9 +18,10 @@ const Home = () => {
           <img
             src={pic}
             alt=''
-            style={{ maxWidth: '100%', maxHeight: '100%' }}
+            className = 'profileimage'
+            
           />
-          <h2>{user.name}</h2>
+          <h1 style = {{textAlign:'center'}}>{user.name}</h1>
         </Grid>
         <Grid item xs={6}>
           <Outlet />
@@ -29,18 +31,20 @@ const Home = () => {
             orientation='vertical'
             color='primary'
             aria-label='vertical contained primary button group'
-            variant='text'>
-            <Link to='/'>
-              <Button>All Tweets</Button>
+            variant='text'
+            className = 'buttonGroup'>
+
+            <Link to='/' className='linkTo'>
+              <Button className = 'mainButton'>All Tweets</Button>
             </Link>
-            <Link to='/my_tweets'>
-              <Button>My Tweets</Button>
+            <Link to='/my_tweets' className='linkTo'>
+              <Button className = 'mainButton'>My Tweets</Button>
             </Link>
-            <Link to='/all_users'>
-              <Button>All Users</Button>
+            <Link to='/all_users' className='linkTo'>
+              <Button className = 'mainButton'>All Users</Button>
             </Link>
-            <Link to='/search_users'>
-              <Button>Search Users</Button>
+            <Link to='/search_users' className='linkTo'>
+              <Button className = 'mainButton'>Search Users</Button>
             </Link>
           </ButtonGroup>
         </Grid>

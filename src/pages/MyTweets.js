@@ -14,7 +14,7 @@ const MyTweets = () => {
   }, [token, userId, dispatch]);
   return (
     <>
-      <h1>My Tweets</h1>
+      <h1 style={{textAlign : 'center'}}>My Tweets</h1>
       <Grid
         container
         direction='column'

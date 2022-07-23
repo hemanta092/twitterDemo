@@ -50,7 +50,8 @@ const SearchUser = () => {
   
 
   return (
-    <Container maxWidth='sm'>
+    <Container >
+      <h1 className = 'searchuser'>Search User</h1>
       <Grid
         container
         direction='row'
@@ -63,6 +64,7 @@ const SearchUser = () => {
             size='small'
             fullWidth
             onChange={searchUserInputHandler}
+            style={{width :'96%'}}
           />
         </Grid>
         <Grid item xs>
