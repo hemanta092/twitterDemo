@@ -54,6 +54,11 @@ const AllUsers = () => {
       : `1 Minutes Ago`;
   };
 
+  var colors= ['aqua', 'blanchedalmond', 'blue', 'fuchsia', 'gold', 'green', 
+'lime', 'coral', 'navy', 'olive', 'orange', 'mediumpurple', 'orangered', 
+'silver', 'teal', 'deepskyblue', 'yellow','lightsalmon','palegreen','pink','plum',
+'tomato','violet','olivedrab','moccasin','lawngreen'];
+
   return (
     <>
       <h1 style={{textAlign:'center'}}>All Users</h1>
@@ -61,7 +66,8 @@ const AllUsers = () => {
         <List className={classes.root}>
           <ListItem className={classes.boxShadow}>
             <ListItemAvatar>
-              <Avatar>{user.firstName.charAt(0).toUpperCase()}</Avatar>
+              <Avatar style ={{backgroundColor : colors[user.firstName.charAt(0).toUpperCase().charCodeAt(0)-'A'.charCodeAt(0)]}}>
+                {user.firstName.charAt(0).toUpperCase()}</Avatar>
             </ListItemAvatar>
             
             <ListItemText primary={user.userId} secondary={user.firstName+" "+user.lastName} />

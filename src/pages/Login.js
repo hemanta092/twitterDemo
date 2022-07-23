@@ -7,6 +7,9 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import { Link } from 'react-router-dom';
+import pic from '../resources/tweetlogo.png';
+import Navbar from '../components/Navbar';
+import Grid from '@material-ui/core/Grid';
 // import { IconButton } from '@material-ui/core';
 // import TwitterIcon from '@mui/icons-material/Twitter';
 // import GoogleIcon from '@mui/icons-material/Google';
@@ -14,6 +17,17 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
   return (
+    <div>
+      <Navbar />  
+      <Grid container spacing={0}>
+      <Grid item sm={6} xs={12}>
+    <img
+    src={pic}
+    alt=''
+    className = 'logoimage'
+    />
+    </Grid>
+    <Grid item xs={12} sm={6}>
     <div id='loginform'>
       <h2 id='headerTitle'>Login</h2>
       <div>
@@ -44,6 +58,9 @@ const Login = () => {
           </IconButton>
         </div>
       </div>
+    </div>
+    </Grid>
+    </Grid>
     </div>
   );
 };

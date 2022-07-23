@@ -43,6 +43,11 @@ function getModalStyle() {
   };
 }
 
+var colors= ['aqua', 'blanchedalmond', 'blue', 'fuchsia', 'gold', 'green', 
+'lime', 'coral', 'navy', 'olive', 'orange', 'mediumpurple', 'orangered', 
+'silver', 'teal', 'deepskyblue', 'yellow','lightsalmon','palegreen','pink','plum',
+'tomato','violet','olivedrab','moccasin','lawngreen'];
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '100%',
@@ -199,8 +204,8 @@ export default function TweetCard({
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label='recipe' className={classes.avatar}>
-            R
+          <Avatar aria-label='recipe' style ={{backgroundColor : colors[displayName.charAt(0).toUpperCase().charCodeAt(0)-'A'.charCodeAt(0)]}}>
+            {displayName.charAt(0).toUpperCase()}
           </Avatar>
         }
         title={displayName}
