@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginBottom: '2rem',
     width: '100%',
-    
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -31,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles();
   const { isLoggedIn } = useSelector((state) => state.user);
+
   return (
     <div className={classes.root}>
       <AppBar position='static'>
@@ -38,7 +38,11 @@ const Navbar = () => {
           <TwitterIcon />
           <h2>Tweet App</h2>
           <div>
-            {isLoggedIn ? null : <Link to='/signup' className = {classes.menuButton}><Button variant='outlined'>Sign Up</Button></Link>}
+            {isLoggedIn ? null : (
+              <Link to='/signup' className={classes.menuButton}>
+                <Button variant='outlined'>Sign Up</Button>
+              </Link>
+            )}
             <Link to='/login'>
               {isLoggedIn ? (
                 <Button variant='outlined'>Sign Out</Button>

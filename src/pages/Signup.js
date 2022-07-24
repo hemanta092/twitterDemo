@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Login.css';
-import { Button, TextField } from '@material-ui/core';
+import { Button, Grid, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { signupRequest } from '../features/user/userSlice';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import pic from '../resources/tweetlogo.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,49 +61,75 @@ const Signup = () => {
   },[form,dispatch]);
 
   return (
-    <div id='loginform'>
-      <h2 id='headerTitle'>Sign Up</h2>
-      <form
-        className={classes.root}
-        onSubmit={handleFormSubmit}
-        noValidate
-        autoComplete='off'>
-        <TextField
-          inputRef={firstNameRef}
-          id='firstname'
-          label='First Name'
-          variant='outlined'
-        />
-        <TextField id='lastname' inputRef={lastNameRef} label='Last Name' variant='outlined' />
-        <TextField
-          id='password'
-          inputRef={passwordRef}
-          label='Password'
-          type='password'
-          variant='outlined'
-        />
-        <TextField
-          id='dob'
-          inputRef={dobRef}
-          label='Date of Birth'
-          type='date'
-          variant='outlined'
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <TextField id='gender' inputRef={genderRef} label='Gender' variant='outlined' />
-        <TextField
-          inputRef={mobileRef}
-          id='mobile'
-          label='Mobile Number'
-          variant='outlined'
-        />
-        <TextField id='email' inputRef={emailRef} type='email' label='Email' variant='outlined' />
-        <Button type='submit' variant='contained' color='primary'>
-          Sign Up
-        </Button>
-      </form>
+    <div>
+      <Navbar />
+      <Grid container spacing={0}>
+        <Grid item sm={6} xs={12}>
+          <img src={pic} alt='' className='logoimage' />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <div id='loginform'>
+            <h2 id='headerTitle'>Sign Up</h2>
+            <form
+              className={classes.root}
+              onSubmit={handleFormSubmit}
+              noValidate
+              autoComplete='off'>
+              <TextField
+                inputRef={firstNameRef}
+                id='firstname'
+                label='First Name'
+                variant='outlined'
+              />
+              <TextField
+                id='lastname'
+                inputRef={lastNameRef}
+                label='Last Name'
+                variant='outlined'
+              />
+              <TextField
+                id='password'
+                inputRef={passwordRef}
+                label='Password'
+                type='password'
+                variant='outlined'
+              />
+              <TextField
+                id='dob'
+                inputRef={dobRef}
+                label='Date of Birth'
+                type='date'
+                variant='outlined'
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <TextField
+                id='gender'
+                inputRef={genderRef}
+                label='Gender'
+                variant='outlined'
+              />
+              <TextField
+                inputRef={mobileRef}
+                id='mobile'
+                label='Mobile Number'
+                variant='outlined'
+              />
+              <TextField
+                id='email'
+                inputRef={emailRef}
+                type='email'
+                label='Email'
+                variant='outlined'
+              />
+              <Button type='submit' variant='contained' color='primary'>
+                Sign Up
+              </Button>
+            </form>
+          </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };

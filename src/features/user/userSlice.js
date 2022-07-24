@@ -7,6 +7,9 @@ import axios from 'axios';
 const loginurl = 'http://localhost:8081/auth/login';
 const getUserUrl = 'http://localhost:8081/auth/validate';
 const signupURL = 'http://localhost:8081/auth/register';
+const signoutURL = 'http://localhost:8081/auth/logout';
+const forgotURL = 'http://localhost:8081/auth/forget';
+const updatePasswordURL = 'http://localhost:8081/auth/updatePassword';
 
 const initialState = {
   user: {},
@@ -18,6 +21,22 @@ const initialState = {
     userId: '',
     password: '',
   },
+  forgotResponse: '',
+  forgotUserid: '',
+};
+
+const defaultState = {
+  user: {},
+  isLoggedIn: false,
+  isLoading: false,
+  userId: '',
+  token: '',
+  loginInput: {
+    userId: '',
+    password: '',
+  },
+  forgotResponse: '',
+  forgotUserid: '',
 };
 
 export const loginRequest = createAsyncThunk(
@@ -70,6 +89,46 @@ export const signupRequest = createAsyncThunk(
   }
 );
 
+export const signoutRequest = createAsyncThunk(
+  'user/signout',
+  async (reqBody) => {
+    try {
+      const res = await axios.get(signoutURL, {
+        headers: {
+          Authorization: reqBody.token,
+        },
+      });
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+
+export const forgotRequest = createAsyncThunk(
+  'user/forgotRequest',
+  async (reqBody) => {
+    try {
+      const res = await axios.post(forgotURL, reqBody);
+      return res;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const updatePasswrod = createAsyncThunk(
+  'user/updatePassword',
+  async (reqBody) => {
+    try {
+      const res = await axios.post(updatePasswordURL, reqBody);
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -77,6 +136,9 @@ const userSlice = createSlice({
     handleLogin: (state, action) => {
       const details = action.payload;
       state.loginInput = details;
+    },
+    updateForgotUserid: (state, action) => {
+      state.forgotUserid = action.payload;
     },
   },
   extraReducers: {
@@ -105,6 +167,13 @@ const userSlice = createSlice({
       console.log(action);
       state.isLoading = false;
     },
+    [signoutRequest.fulfilled]: (state) => {
+      state = defaultState;
+    },
+    [forgotRequest.fulfilled]: (state, action) => {
+      state.forgotResponse = action.payload;
+    },
+    [updatePasswrod.fulfilled]: (state, action) => {},
   },
 });
 

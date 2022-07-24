@@ -9,6 +9,7 @@ import MyTweets from './pages/MyTweets';
 import AllUsers from './pages/AllUsers';
 import SearchUser from './pages/SearchUser';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   return (
@@ -23,6 +24,11 @@ function App() {
         </Route>
         <Route path='/login' exact element={<Login></Login>} />
         <Route path='/signup' exact element={<Signup></Signup>} />
+        <Route
+          path='/forgot'
+          exact
+          element={<ForgotPassword></ForgotPassword>}
+        />
       </Routes>
     </BrowserRouter>
   );
