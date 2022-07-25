@@ -6,6 +6,7 @@ import { updatePasswrod } from '../features/user/userSlice';
 import pic from '../resources/tweetlogo.png';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
 const UpdatePassword = () => {
   const [password, setPassword] = useState('');
@@ -43,19 +44,19 @@ const UpdatePassword = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <div id='loginform'>
-            <h2 id='headerTitle'>Forgot Password</h2>]
+            <h2 id='headerTitle'>Forgot Password</h2>
             <div>
               <TextField
-                id='userId'
-                type='email'
-                label='User ID'
+                id='password'
+                type='password'
+                label='Password'
                 variant='outlined'
                 onChange={(e) => setPassword(e.target.value)}
               />
               <TextField
-                id='mobile'
-                type='number'
-                label='Monile Number'
+                id='newPassword'
+                type='password'
+                label='Retype Password'
                 variant='outlined'
                 onChange={(e) => setRePassword(e.target.value)}
               />

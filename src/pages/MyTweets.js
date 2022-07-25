@@ -31,6 +31,8 @@ const MyTweets = () => {
               likeCount={tweet.tweetLikesCount}
               replies={tweet.tweetReply}
               myTweet={true}
+              tag={tweet.tag}
+              createdTime={tweet.updateDateTime}
             />
           </Grid>
         ))}

@@ -10,6 +10,7 @@ import AllUsers from './pages/AllUsers';
 import SearchUser from './pages/SearchUser';
 import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
+import UpdatePassword from './pages/UpdatePassword';
 
 function App() {
   return (
@@ -28,6 +29,11 @@ function App() {
           path='/forgot'
           exact
           element={<ForgotPassword></ForgotPassword>}
+        />
+        <Route
+          path='/updatepassword'
+          exact
+          element={<UpdatePassword></UpdatePassword>}
         />
       </Routes>
     </BrowserRouter>

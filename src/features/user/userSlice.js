@@ -177,6 +177,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { handleLogin } = userSlice.actions;
+export const { handleLogin,updateForgotUserid } = userSlice.actions;
 
 export default userSlice.reducer;

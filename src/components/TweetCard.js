@@ -133,6 +133,8 @@ export default function TweetCard({
   likeCount,
   replies,
   myTweet,
+  tag,
+  createdTime,
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -265,8 +267,16 @@ export default function TweetCard({
         {body}
       </Modal>
       <CardContent>
+        <Typography variant='body1' color='textSecondary'  component='p'>
+        {text}
+        </Typography>
         <Typography variant='body2' color='textSecondary' component='p'>
-          {text}
+          {tag}
+        </Typography>
+        <Typography variant='caption' color='textSecondary'  component ='div'  align='right'>
+                  {new Date(createdTime).toLocaleString(undefined, {
+                    timeZone: 'Asia/Kolkata',
+                  })}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
