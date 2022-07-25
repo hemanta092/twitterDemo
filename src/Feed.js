@@ -45,6 +45,8 @@ function Feed() {
                 likeCount={post.tweetLikesCount}
                 replies={post.tweetReply}
                 myTweet={false}
+                tag={post.tag}
+                createdTime={post.updateDateTime}
               />
             </Grid>
           ))}

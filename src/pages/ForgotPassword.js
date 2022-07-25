@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { forgotRequest } from '../features/user/userSlice';
 import pic from '../resources/tweetlogo.png';
+import './Login.css';
 import { useSnackbar } from 'notistack';
 import { updateForgotUserid } from '../features/user/userSlice';
 
@@ -40,7 +41,7 @@ const ForgotPassword = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <div id='loginform'>
-            <h2 id='headerTitle'>Forgot Password</h2>]
+            <h2 id='headerTitle'>Forgot Password</h2>
             <div>
               <TextField
                 id='userId'

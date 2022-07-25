@@ -28,6 +28,7 @@ function TweetBox() {
       };
       dispatch(addTweet(data));
       setTweetMessage('');
+      setTweetTag('');
       enqueueSnackbar('Tweeted Posted Successfully', { variant });
     } else {
       const variant = 'warning';
@@ -54,7 +55,7 @@ function TweetBox() {
             value={tweetTag}
             placeholder='#trending'
             type='text'
-            maxLength='144'
+            maxLength='50'
           />
         </div>
 
