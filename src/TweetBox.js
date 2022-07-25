@@ -31,7 +31,7 @@ function TweetBox() {
       setTweetTag('');
       enqueueSnackbar('Tweeted Posted Successfully', { variant });
     } else {
-      const variant = 'warning';
+      const variant = 'error';
       enqueueSnackbar('Tweet cannot be empty', { variant });
     }
   };

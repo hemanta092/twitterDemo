@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,6 +7,7 @@ import { signupRequest } from '../features/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import pic from '../resources/tweetlogo.png';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,41 +25,68 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = () => {
   const classes = useStyles();
-  const [form, setForm ] = useState({});
+  //const [form, setForm ] = useState({});
 
-  const firstNameRef = useRef(null);
-  const lastNameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const genderRef = useRef(null);
-  const dobRef = useRef(null);
-  const mobileRef = useRef(null);
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [gender, setGender] = useState('');
+  const [mobileNo, setMobileNo] = useState('');
+
+  // const firstNameRef = useRef(null);
+  // const lastNameRef = useRef(null);
+  // const emailRef = useRef(null);
+  // const passwordRef = useRef(null);
+  // const genderRef = useRef(null);
+  // const dobRef = useRef(null);
+  // const mobileRef = useRef(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setForm({
-      userId: emailRef.current.value,
-      password: passwordRef.current.value,
-      firstName: firstNameRef.current.value,
-      lastName: lastNameRef.current.value,
-      dateOfBirth: dobRef.current.value,
-      gender: genderRef.current.value,
-      mobileNo: mobileRef.current.value,
-      
-    });
-  };
-
-  useEffect(()=>{
+    const form = {
+      userId,
+      password,
+      firstName,
+      lastName,
+      dateOfBirth,
+      gender,
+      mobileNo,
+    };
     dispatch(
       signupRequest({
         body: form,
       })
     );
-    //navigate('/login');
-  },[form,dispatch]);
+    const variant = 'success';
+    enqueueSnackbar('Signed Up Successfully!', { variant });
+    navigate('/login');
+    // setForm({
+    //   userId: emailRef.current.value,
+    //   password: passwordRef.current.value,
+    //   firstName: firstNameRef.current.value,
+    //   lastName: lastNameRef.current.value,
+    //   dateOfBirth: dobRef.current.value,
+    //   gender: genderRef.current.value,
+    //   mobileNo: mobileRef.current.value,
+
+    // });
+  };
+
+  // useEffect(()=>{
+  //   dispatch(
+  //     signupRequest({
+  //       body: form,
+  //     })
+  //   );
+  //   //navigate('/login');
+  // },[form,dispatch]);
 
   return (
     <div>
@@ -76,27 +104,27 @@ const Signup = () => {
               noValidate
               autoComplete='off'>
               <TextField
-                inputRef={firstNameRef}
+                onChange={(e) => setFirstName(e.target.value)}
                 id='firstname'
                 label='First Name'
                 variant='outlined'
               />
               <TextField
                 id='lastname'
-                inputRef={lastNameRef}
+                onChange={(e) => setLastName(e.target.value)}
                 label='Last Name'
                 variant='outlined'
               />
               <TextField
                 id='password'
-                inputRef={passwordRef}
+                onChange={(e) => setPassword(e.target.value)}
                 label='Password'
                 type='password'
                 variant='outlined'
               />
               <TextField
                 id='dob'
-                inputRef={dobRef}
+                onChange={(e) => setDateOfBirth(e.target.value)}
                 label='Date of Birth'
                 type='date'
                 variant='outlined'
@@ -106,19 +134,19 @@ const Signup = () => {
               />
               <TextField
                 id='gender'
-                inputRef={genderRef}
+                onChange={(e) => setGender(e.target.value)}
                 label='Gender'
                 variant='outlined'
               />
               <TextField
-                inputRef={mobileRef}
+                onChange={(e) => setMobileNo(e.target.value)}
                 id='mobile'
                 label='Mobile Number'
                 variant='outlined'
               />
               <TextField
                 id='email'
-                inputRef={emailRef}
+                onChange={(e) => setUserId(e.target.value)}
                 type='email'
                 label='Email'
                 variant='outlined'

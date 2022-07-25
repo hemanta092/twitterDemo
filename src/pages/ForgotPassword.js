@@ -27,7 +27,7 @@ const ForgotPassword = () => {
     if (forgotResponse) {
       navigate('/updatepassword');
     } else {
-      const variant = 'warning';
+      const variant = 'error';
       enqueueSnackbar('User Not Found', { variant });
     }
   };

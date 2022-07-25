@@ -186,7 +186,7 @@ export default function TweetCard({
       );
       setReply('');
     } else {
-      const variant = 'warning';
+      const variant = 'error';
       enqueueSnackbar('Please enter tweet reply!', { variant });
     }
   };
@@ -267,16 +267,20 @@ export default function TweetCard({
         {body}
       </Modal>
       <CardContent>
-        <Typography variant='body1' color='textSecondary'  component='p'>
-        {text}
+        <Typography variant='body1' color='textSecondary' component='p'>
+          {text}
         </Typography>
         <Typography variant='body2' color='textSecondary' component='p'>
           {tag}
         </Typography>
-        <Typography variant='caption' color='textSecondary'  component ='div'  align='right'>
-                  {new Date(createdTime).toLocaleString(undefined, {
-                    timeZone: 'Asia/Kolkata',
-                  })}
+        <Typography
+          variant='caption'
+          color='textSecondary'
+          component='div'
+          align='right'>
+          {new Date(createdTime).toLocaleString(undefined, {
+            timeZone: 'Asia/Kolkata',
+          })}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

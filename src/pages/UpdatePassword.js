@@ -30,7 +30,7 @@ const UpdatePassword = () => {
       enqueueSnackbar('Passwords updated successfully', { variant });
       navigate('/login');
     } else {
-      const variant = 'warning';
+      const variant = 'error';
       enqueueSnackbar('Passwords do not match!', { variant });
     }
   };
