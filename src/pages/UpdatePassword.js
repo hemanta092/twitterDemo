@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from '@material-ui/core';
+import { Button, Grid, InputAdornment, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../components/Navbar';
@@ -7,8 +7,26 @@ import pic from '../resources/tweetlogo.png';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import { makeStyles } from '@material-ui/core/styles';
+import { Lock } from '@material-ui/icons';
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '40ch',
+    },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+}));
 
 const UpdatePassword = () => {
+  const classes = useStyles();
   const [password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState('');
 
@@ -45,8 +63,15 @@ const UpdatePassword = () => {
         <Grid item xs={12} sm={6}>
           <div id='loginform'>
             <h2 id='headerTitle'>Forgot Password</h2>
-            <div>
+            <div className={classes.root}>
               <TextField
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Lock />
+                  </InputAdornment>
+                ),
+              }}
                 id='password'
                 type='password'
                 label='Password'

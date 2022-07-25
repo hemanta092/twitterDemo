@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import pic from '../resources/tweetlogo.png';
 import Navbar from '../components/Navbar';
 import Grid from '@material-ui/core/Grid';
+
 // import { IconButton } from '@material-ui/core';
 // import TwitterIcon from '@mui/icons-material/Twitter';
 // import GoogleIcon from '@mui/icons-material/Google';
@@ -25,14 +26,14 @@ const Login = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <div id='loginform'>
-            <h2 id='headerTitle'>Login</h2>
+            <h2 id='headerTitle'>Login</h2>           
             <div>
               <FormInput
                 description='Username'
                 placeholder='Enter your username'
                 type='text'
               />
-              <FormInput
+              <FormInput         
                 description='Password'
                 placeholder='Enter your password'
                 type='password'
