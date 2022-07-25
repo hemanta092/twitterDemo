@@ -5,7 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { signoutRequest } from '../features/user/userSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +32,13 @@ const Navbar = () => {
   const classes = useStyles();
   const { isLoggedIn } = useSelector((state) => state.user);
 
+  const { token } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleSignOut = () => {
+    dispatch(signoutRequest({ token }));
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position='static'>
@@ -45,7 +53,9 @@ const Navbar = () => {
             )}
             <Link to='/login'>
               {isLoggedIn ? (
-                <Button variant='outlined'>Sign Out</Button>
+                <Button onClick={handleSignOut} variant='outlined'>
+                  Sign Out
+                </Button>
               ) : (
                 <Button variant='outlined'>Login</Button>
               )}
