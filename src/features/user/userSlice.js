@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-
 const loginurl = 'http://localhost:8081/auth/login';
 const getUserUrl = 'http://localhost:8081/auth/validate';
 const signupURL = 'http://localhost:8081/auth/register';
@@ -169,7 +168,7 @@ const userSlice = createSlice({
       state = defaultState;
     },
     [forgotRequest.fulfilled]: (state, action) => {
-      state.forgotResponse = action.payload.data.valid;
+      state.forgotResponse = action.payload.valid;
     },
     [updatePasswrod.fulfilled]: (state, action) => {},
   },

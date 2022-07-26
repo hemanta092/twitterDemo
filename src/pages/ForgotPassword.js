@@ -1,5 +1,5 @@
 import { Button, Grid, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -39,17 +39,20 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleForgotSubmit = async () => {
+  const handleForgotSubmit = () => {
     const body = { userId, dateOfBirth, mobileNo };
-    await dispatch(updateForgotUserid(userId));
-    await dispatch(forgotRequest(body));
+    dispatch(updateForgotUserid(userId));
+    dispatch(forgotRequest(body));
+  };
+
+  useEffect(() => {
     if (forgotResponse) {
       navigate('/updatepassword');
     } else {
       const variant = 'error';
       enqueueSnackbar('User Not Found', { variant });
     }
-  };
+  }, [forgotResponse, enqueueSnackbar, navigate]);
 
   return (
     <div>
@@ -59,18 +62,17 @@ const ForgotPassword = () => {
           <img src={pic} alt='' className='logoimage' />
         </Grid>
         <Grid item xs={12} sm={6}>
-          
           <div id='loginform'>
             <h2 id='headerTitle'>Forgot Password</h2>
-            <div className = {classes.root}>
+            <div className={classes.root}>
               <TextField
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Person />
-                  </InputAdornment>
-                ),
-              }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <Person />
+                    </InputAdornment>
+                  ),
+                }}
                 id='userId'
                 type='email'
                 label='User ID'
@@ -88,13 +90,13 @@ const ForgotPassword = () => {
                 }}
               />
               <TextField
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Call />
-                  </InputAdornment>
-                ),
-              }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <Call />
+                    </InputAdornment>
+                  ),
+                }}
                 id='mobile'
                 type='number'
                 label='Monile Number'
