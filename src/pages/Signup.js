@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { Button, Grid, TextField } from '@material-ui/core';
+import { Button, Grid, InputAdornment, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { signupRequest } from '../features/user/userSlice';
@@ -8,12 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import pic from '../resources/tweetlogo.png';
 import { useSnackbar } from 'notistack';
+import { AccountCircle, Call, Lock, Mail, Person, Wc } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: '40ch',
     },
     display: 'flex',
     flexDirection: 'column',
@@ -104,6 +105,13 @@ const Signup = () => {
               noValidate
               autoComplete='off'>
               <TextField
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Person />
+                  </InputAdornment>
+                ),
+              }}
                 onChange={(e) => setFirstName(e.target.value)}
                 id='firstname'
                 label='First Name'
@@ -111,6 +119,13 @@ const Signup = () => {
                 required
               />
               <TextField
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <AccountCircle />
+                  </InputAdornment>
+                ),
+              }}
                 id='lastname'
                 onChange={(e) => setLastName(e.target.value)}
                 label='Last Name'
@@ -118,6 +133,13 @@ const Signup = () => {
                 required
               />
               <TextField
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Lock />
+                  </InputAdornment>
+                ),
+              }}
                 id='password'
                 onChange={(e) => setPassword(e.target.value)}
                 label='Password'
@@ -137,6 +159,13 @@ const Signup = () => {
                 }}
               />
               <TextField
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Wc />
+                  </InputAdornment>
+                ),
+              }}
                 id='gender'
                 onChange={(e) => setGender(e.target.value)}
                 label='Gender'
@@ -144,6 +173,13 @@ const Signup = () => {
                 required
               />
               <TextField
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Call />
+                  </InputAdornment>
+                ),
+              }}
                 onChange={(e) => setMobileNo(e.target.value)}
                 id='mobile'
                 label='Mobile Number'
@@ -151,6 +187,13 @@ const Signup = () => {
                 required
               />
               <TextField
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Mail />
+                  </InputAdornment>
+                ),
+              }}
                 id='email'
                 onChange={(e) => setUserId(e.target.value)}
                 type='email'
