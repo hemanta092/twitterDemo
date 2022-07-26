@@ -82,7 +82,7 @@ export const signupRequest = createAsyncThunk(
     console.log(reqBody);
     try {
       const res = await axios.post(signupURL, reqBody.body);
-      return res;
+      return res.data;
     } catch (err) {
       console.error(err);
     }
@@ -98,7 +98,7 @@ export const signoutRequest = createAsyncThunk(
           Authorization: reqBody.token,
         },
       });
-      return res;
+      return res.data;
     } catch (err) {
       console.error(err);
     }
@@ -110,7 +110,7 @@ export const forgotRequest = createAsyncThunk(
   async (reqBody) => {
     try {
       const res = await axios.post(forgotURL, reqBody);
-      return res;
+      return res.data;
     } catch (err) {
       console.log(err);
     }
@@ -122,7 +122,7 @@ export const updatePasswrod = createAsyncThunk(
   async (reqBody) => {
     try {
       const res = await axios.post(updatePasswordURL, reqBody);
-      return res;
+      return res.data;
     } catch (err) {
       console.error(err);
     }
@@ -177,6 +177,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { handleLogin,updateForgotUserid } = userSlice.actions;
+export const { handleLogin, updateForgotUserid } = userSlice.actions;
 
 export default userSlice.reducer;

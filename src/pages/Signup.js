@@ -108,12 +108,14 @@ const Signup = () => {
                 id='firstname'
                 label='First Name'
                 variant='outlined'
+                required
               />
               <TextField
                 id='lastname'
                 onChange={(e) => setLastName(e.target.value)}
                 label='Last Name'
                 variant='outlined'
+                required
               />
               <TextField
                 id='password'
@@ -121,6 +123,7 @@ const Signup = () => {
                 label='Password'
                 type='password'
                 variant='outlined'
+                required
               />
               <TextField
                 id='dob'
@@ -128,6 +131,7 @@ const Signup = () => {
                 label='Date of Birth'
                 type='date'
                 variant='outlined'
+                required
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -137,12 +141,14 @@ const Signup = () => {
                 onChange={(e) => setGender(e.target.value)}
                 label='Gender'
                 variant='outlined'
+                required
               />
               <TextField
                 onChange={(e) => setMobileNo(e.target.value)}
                 id='mobile'
                 label='Mobile Number'
                 variant='outlined'
+                required
               />
               <TextField
                 id='email'
@@ -150,6 +156,7 @@ const Signup = () => {
                 type='email'
                 label='Email'
                 variant='outlined'
+                required
               />
               <Button type='submit' variant='contained' color='primary'>
                 Sign Up

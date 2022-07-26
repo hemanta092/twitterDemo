@@ -49,7 +49,7 @@ export const addTweet = createAsyncThunk(
           Authorization: reqBody.token,
         },
       });
-      return res;
+      return res.data;
     } catch (err) {
       console.error(err);
       return thunkAPI.rejectWithValue('something went wrong');
@@ -66,7 +66,7 @@ export const getMyTweets = createAsyncThunk(
           Authorization: reqBody.token,
         },
       });
-      return res;
+      return res.data;
     } catch (err) {
       console.error(err);
       return thunkAPI.rejectWithValue('something went wrong');
@@ -83,7 +83,7 @@ export const getAllUsers = createAsyncThunk(
           Authorization: reqBody,
         },
       });
-      return res;
+      return res.data;
     } catch (err) {
       console.error(err);
       return thunkAPI.rejectWithValue('something went wrong');
@@ -100,7 +100,7 @@ export const searchUserByUsername = createAsyncThunk(
           Authorization: reqBody.token,
         },
       });
-      return res;
+      return res.data;
     } catch (err) {
       console.error(err);
       return thunkAPI.rejectWithValue('something went wrong');
@@ -118,7 +118,7 @@ export const likeTweet = createAsyncThunk(
         },
       });
       console.log(res);
-      return res;
+      return res.data;
     } catch (err) {
       console.error(err);
     }
@@ -136,7 +136,7 @@ export const tweetReply = createAsyncThunk('tweetReply', async (reqBody) => {
         },
       }
     );
-    return res;
+    return res.data;
   } catch (err) {
     console.error(err);
   }
@@ -149,7 +149,7 @@ export const editTweet = createAsyncThunk('editTweet', async (reqBody) => {
         Authorization: reqBody.token,
       },
     });
-    return res;
+    return res.data;
   } catch (err) {
     console.error(err);
   }
@@ -162,7 +162,7 @@ export const deleteTweet = createAsyncThunk('deleteTweet', async (reqBody) => {
         Authorization: reqBody.token,
       },
     });
-    return res;
+    return res.data;
   } catch (err) {
     console.error(err);
   }
@@ -188,76 +188,75 @@ const tweetSlice = createSlice({
       state.isLoading = false;
     },
     [addTweet.fulfilled]: (state, action) => {
-      state.tweets = [...state.tweets, action.payload.data];
+      state.tweets = [...state.tweets, action.payload];
     },
     [getMyTweets.fulfilled]: (state, action) => {
-      state.myTweets = action.payload.data;
+      state.myTweets = action.payload;
     },
     [getAllUsers.fulfilled]: (state, action) => {
-      state.allUsers = action.payload.data;
+      state.allUsers = action.payload;
     },
     [searchUserByUsername.fulfilled]: (state, action) => {
-      state.searchUserResults = action.payload.data;
+      state.searchUserResults = action.payload;
     },
     [likeTweet.fulfilled]: (state, action) => {
       state.tweets = state.tweets.map((t) => {
-        if (t.tweetId === action.payload.data.tweetId) {
-          t.hasLiked = action.payload.data.hasLiked;
-          t.tweetLikes = action.payload.data.tweetLikes;
-          t.tweetLikesCount = action.payload.data.tweetLikesCount;
-          t.updateDateTime = action.payload.data.tweetLikesCount;
+        if (t.tweetId === action.payload.tweetId) {
+          t.hasLiked = action.payload.hasLiked;
+          t.tweetLikes = action.payload.tweetLikes;
+          t.tweetLikesCount = action.payload.tweetLikesCount;
+          t.updateDateTime = action.payload.tweetLikesCount;
         }
         return t;
       });
 
       state.myTweets = state.myTweets.map((t) => {
-        if (t.tweetId === action.payload.data.tweetId) {
-          t.hasLiked = action.payload.data.hasLiked;
-          t.tweetLikes = action.payload.data.tweetLikes;
-          t.tweetLikesCount = action.payload.data.tweetLikesCount;
-          t.updateDateTime = action.payload.data.tweetLikesCount;
+        if (t.tweetId === action.payload.tweetId) {
+          t.hasLiked = action.payload.hasLiked;
+          t.tweetLikes = action.payload.tweetLikes;
+          t.tweetLikesCount = action.payload.tweetLikesCount;
+          t.updateDateTime = action.payload.tweetLikesCount;
         }
         return t;
       });
     },
     [tweetReply.fulfilled]: (state, action) => {
       state.tweets = state.tweets.map((t) => {
-        if (t.tweetId === action.payload.data.tweetId) {
-          t.tweetReply = action.payload.data.tweetReply;
-          t.updateDateTime = action.payload.data.tweetLikesCount;
+        if (t.tweetId === action.payload.tweetId) {
+          t.tweetReply = action.payload.tweetReply;
+          t.updateDateTime = action.payload.tweetLikesCount;
         }
         return t;
       });
       state.myTweets = state.myTweets.map((t) => {
-        if (t.tweetId === action.payload.data.tweetId) {
-          t.tweetReply = action.payload.data.tweetReply;
-          t.updateDateTime = action.payload.data.tweetLikesCount;
+        if (t.tweetId === action.payload.tweetId) {
+          t.tweetReply = action.payload.tweetReply;
+          t.updateDateTime = action.payload.tweetLikesCount;
         }
         return t;
       });
     },
     [editTweet.fulfilled]: (state, action) => {
       state.tweets = state.tweets.map((t) => {
-        if (t.tweetId === action.payload.data.tweetId) {
-          t.message = action.payload.data.message;
+        if (t.tweetId === action.payload.tweetId) {
+          t.message = action.payload.message;
         }
         return t;
       });
       state.myTweets = state.myTweets.map((t) => {
-        if (t.tweetId === action.payload.data.tweetId) {
-          t.message = action.payload.data.message;
+        if (t.tweetId === action.payload.tweetId) {
+          t.message = action.payload.message;
         }
         return t;
       });
     },
     [deleteTweet.fulfilled]: (state, action) => {
       state.tweets = state.tweets.filter(
-        (item) => item.tweetId !== action.payload.data.tweetId
+        (item) => item.tweetId !== action.payload.tweetId
       );
       state.myTweets = state.myTweets.filter(
-        (item) => item.tweetId !== action.payload.data.tweetId
+        (item) => item.tweetId !== action.payload.tweetId
       );
-      
     },
   },
 });
