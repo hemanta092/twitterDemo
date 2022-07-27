@@ -1,80 +1,82 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const loginurl = 'http://localhost:8081/auth/login';
-const getUserUrl = 'http://localhost:8081/auth/validate';
-const signupURL = 'http://localhost:8081/auth/register';
-const signoutURL = 'http://localhost:8082/tweet/logout';
-const forgotURL = 'http://localhost:8081/auth/forget';
-const updatePasswordURL = 'http://localhost:8081/auth/updatePassword';
+const loginurl = "http://localhost:8081/auth/login";
+const getUserUrl = "http://localhost:8081/auth/validate";
+const signupURL = "http://localhost:8081/auth/register";
+const signoutURL = "http://localhost:8082/tweet/logout";
+const forgotURL = "http://localhost:8081/auth/forget";
+const updatePasswordURL = "http://localhost:8081/auth/updatePassword";
 
 const initialState = {
   user: {},
   isLoggedIn: false,
   isLoading: false,
-  userId: '',
-  token: '',
+  userId: "",
+  token: "",
   loginInput: {
-    userId: '',
-    password: '',
+    userId: "",
+    password: "",
   },
-  forgotResponse: '',
-  forgotUserid: '',
+  forgotResponse: "1",
+  signupResponse: "1",
+  forgotUserid: "",
 };
 
 const defaultState = {
   user: {},
   isLoggedIn: false,
   isLoading: false,
-  userId: '',
-  token: '',
+  userId: "",
+  token: "",
   loginInput: {
-    userId: '',
-    password: '',
+    userId: "",
+    password: "",
   },
-  forgotResponse: '',
-  forgotUserid: '',
+  forgotResponse: "1",
+  signupResponse: "1",
+  forgotUserid: "",
 };
 
 export const loginRequest = createAsyncThunk(
-  'user/loginRequest',
+  "user/loginRequest",
   async (reqBody, thunkAPI) => {
     try {
       const jsonBody = JSON.stringify(reqBody);
       const resp = await axios.post(loginurl, jsonBody, {
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
       });
       return resp.data;
     } catch (error) {
       console.error(error);
-      return thunkAPI.rejectWithValue('something went wrong');
+      return thunkAPI.rejectWithValue("something went wrong");
     }
   }
 );
 
 export const getUser = createAsyncThunk(
-  'user/getUser',
+  "user/getUser",
   async (reqBody, thunkAPI) => {
     let headers = {
       Authorization: reqBody,
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Controll-Allow-Methods': '*',
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Controll-Allow-Methods": "*",
     };
     try {
       const resp = await axios.get(getUserUrl, { headers });
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue('something went wrong');
+      return thunkAPI.rejectWithValue("something went wrong");
     }
   }
 );
 
 export const signupRequest = createAsyncThunk(
-  'user/signupRequest',
+  "user/signupRequest",
   async (reqBody) => {
     console.log(reqBody);
     try {
@@ -87,7 +89,7 @@ export const signupRequest = createAsyncThunk(
 );
 
 export const signoutRequest = createAsyncThunk(
-  'user/signout',
+  "user/signout",
   async (reqBody) => {
     try {
       const res = await axios.get(signoutURL, {
@@ -103,7 +105,7 @@ export const signoutRequest = createAsyncThunk(
 );
 
 export const forgotRequest = createAsyncThunk(
-  'user/forgotRequest',
+  "user/forgotRequest",
   async (reqBody) => {
     try {
       const res = await axios.post(forgotURL, reqBody);
@@ -115,7 +117,7 @@ export const forgotRequest = createAsyncThunk(
 );
 
 export const updatePasswrod = createAsyncThunk(
-  'user/updatePassword',
+  "user/updatePassword",
   async (reqBody) => {
     try {
       const res = await axios.post(updatePasswordURL, reqBody);
@@ -127,7 +129,7 @@ export const updatePasswrod = createAsyncThunk(
 );
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     handleLogin: (state, action) => {
@@ -142,6 +144,7 @@ const userSlice = createSlice({
     [loginRequest.pending]: (state) => {
       state.isLoading = true;
     },
+
     [loginRequest.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isLoggedIn = true;
@@ -150,7 +153,7 @@ const userSlice = createSlice({
       state.token = `Bearer ${action.payload.authToken}`;
     },
     [loginRequest.rejected]: (state, action) => {
-      console.log('rejected', action);
+      console.log("rejected", action);
       state.isLoading = false;
     },
     [getUser.pending]: (state) => {
@@ -165,10 +168,20 @@ const userSlice = createSlice({
       state.isLoading = false;
     },
     [signoutRequest.fulfilled]: (state) => {
-      state = defaultState;
+      Object.assign(state, defaultState);
     },
     [forgotRequest.fulfilled]: (state, action) => {
-      state.forgotResponse = action.payload.valid;
+      action.payload.valid === true
+        ? (state.forgotResponse = "2")
+        : (state.forgotResponse = "3");
+    },
+    [signupRequest.fulfilled]: (state, action) => {
+      console.log(action);
+      if (action.payload !== undefined && action.payload.valid === true) {
+        state.signupResponse = "2";
+      } else {
+        state.signupResponse = "3";
+      }
     },
     [updatePasswrod.fulfilled]: (state, action) => {},
   },

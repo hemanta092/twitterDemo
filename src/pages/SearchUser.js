@@ -9,11 +9,11 @@ import {
   ListItemAvatar,
   ListItemText,
   TextField,
-} from '@material-ui/core';
-import './SearchUser.css';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { searchUserByUsername } from '../features/tweet/tweetSlice';
+} from "@material-ui/core";
+import "./SearchUser.css";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { searchUserByUsername } from "../features/tweet/tweetSlice";
 
 const convertTime = (time) => {
   const theDate = new Date(time).toLocaleString();
@@ -36,7 +36,7 @@ const SearchUser = () => {
   const { token } = useSelector((state) => state.user);
   const { searchUserResults } = useSelector((state) => state.tweet);
 
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
 
   useEffect(() => {
     if (userInput.length >= 0) {
@@ -49,54 +49,55 @@ const SearchUser = () => {
   };
 
   var colors = [
-    'aqua',
-    'blanchedalmond',
-    'blue',
-    'fuchsia',
-    'gold',
-    'green',
-    'lime',
-    'coral',
-    'navy',
-    'olive',
-    'orange',
-    'mediumpurple',
-    'orangered',
-    'silver',
-    'teal',
-    'deepskyblue',
-    'yellow',
-    'lightsalmon',
-    'palegreen',
-    'pink',
-    'plum',
-    'tomato',
-    'violet',
-    'olivedrab',
-    'moccasin',
-    'lawngreen',
+    "aqua",
+    "blanchedalmond",
+    "blue",
+    "fuchsia",
+    "gold",
+    "green",
+    "lime",
+    "coral",
+    "navy",
+    "olive",
+    "orange",
+    "mediumpurple",
+    "orangered",
+    "silver",
+    "teal",
+    "deepskyblue",
+    "yellow",
+    "lightsalmon",
+    "palegreen",
+    "pink",
+    "plum",
+    "tomato",
+    "violet",
+    "olivedrab",
+    "moccasin",
+    "lawngreen",
   ];
 
   return (
     <Container>
-      <h1 className='searchuser'>Search User</h1>
+      <h1 className="searchuser">Search User</h1>
       <Grid
         container
-        direction='row'
-        justifyContent='space-evenly'
-        alignItems='center'>
+        direction="row"
+        justifyContent="space-evenly"
+        alignItems="center"
+      >
         <Grid item xs={9}>
           <TextField
-            label='Search User'
-            variant='outlined'
-            size='small'
+            label="Search User"
+            variant="outlined"
+            size="small"
             fullWidth
             onChange={searchUserInputHandler}
-            style={{ width: '96%' }}
+            style={{ width: "96%" }}
           />
         </Grid>
         <Grid item xs>
-          <Button size='medium' variant='contained' fullWidth color='primary'>
+          <Button size="medium" variant="contained" fullWidth color="primary">
             Search
           </Button>
         </Grid>
@@ -104,16 +105,17 @@ const SearchUser = () => {
       <Divider />
       <Grid
         container
-        direction='column'
-        justifyContent='space-evenly'
-        alignItems='stretch'>
+        direction="column"
+        justifyContent="space-evenly"
+        alignItems="stretch"
+      >
         {searchUserResults === undefined || searchUserResults.length === 0 ? (
-          <h2 className='noUser'> No User Found</h2>
+          <h2 className="noUser"> No User Found</h2>
         ) : (
           searchUserResults.map((user) => (
             <Grid item md>
               <List>
-                <ListItem className='listItem'>
+                <ListItem className="listItem">
                   <ListItemAvatar>
                     <Avatar
                       style={{
@@ -122,19 +124,21 @@ const SearchUser = () => {
                             user.firstName
                               .charAt(0)
                               .toUpperCase()
-                              .charCodeAt(0) - 'A'.charCodeAt(0)
+                              .charCodeAt(0) - "A".charCodeAt(0)
                           ],
-                      }}>
+                      }}
+                    >
                       {user.firstName.charAt(0).toUpperCase()}
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
                     primary={user.userId}
-                    secondary={user.firstName + ' ' + user.lastName}
+                    secondary={user.firstName + " " + user.lastName}
                   />
                   <span
-                    className={'status' + (user.active ? 'Online' : 'Offline')}>
-                    {user.active ? 'Online' : convertTime(user.lastSeen)}
+                    className={"status" + (user.active ? "Online" : "Offline")}
+                  >
+                    {user.active ? "Online" : convertTime(user.lastSeen)}
                   </span>
                 </ListItem>
               </List>

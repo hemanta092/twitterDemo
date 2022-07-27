@@ -1,30 +1,29 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllUsers } from '../features/tweet/tweetSlice';
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../features/tweet/tweetSlice";
+import { makeStyles } from "@material-ui/core/styles";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: "100%",
     backgroundColor: theme.palette.background.paper,
-    
   },
-  boxShadow :{
-    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+  boxShadow: {
+    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
   },
-  statusOnline :{
-    color: 'green',
-    fontWeight: 'bold',
-},
-statusOffline :{
-    color: 'red',
-    fontWeight: 'bold',
-}
+  statusOnline: {
+    color: "green",
+    fontWeight: "bold",
+  },
+  statusOffline: {
+    color: "red",
+    fontWeight: "bold",
+  },
 }));
 
 const AllUsers = () => {
@@ -54,25 +53,66 @@ const AllUsers = () => {
       : `1 Minutes Ago`;
   };
 
-  var colors= ['aqua', 'blanchedalmond', 'blue', 'fuchsia', 'gold', 'green', 
-'lime', 'coral', 'navy', 'olive', 'orange', 'mediumpurple', 'orangered', 
-'silver', 'teal', 'deepskyblue', 'yellow','lightsalmon','palegreen','pink','plum',
-'tomato','violet','olivedrab','moccasin','lawngreen'];
+  var colors = [
+    "aqua",
+    "blanchedalmond",
+    "blue",
+    "fuchsia",
+    "gold",
+    "green",
+    "lime",
+    "coral",
+    "navy",
+    "olive",
+    "orange",
+    "mediumpurple",
+    "orangered",
+    "silver",
+    "teal",
+    "deepskyblue",
+    "yellow",
+    "lightsalmon",
+    "palegreen",
+    "pink",
+    "plum",
+    "tomato",
+    "violet",
+    "olivedrab",
+    "moccasin",
+    "lawngreen",
+  ];
 
   return (
     <>
-      <h1 style={{textAlign:'center'}}>All Users</h1>
+      <h1 style={{ textAlign: "center" }}>All Users</h1>
       {allUsers?.map((user) => (
         <List className={classes.root}>
           <ListItem className={classes.boxShadow}>
             <ListItemAvatar>
-              <Avatar style ={{backgroundColor : colors[user.firstName.charAt(0).toUpperCase().charCodeAt(0)-'A'.charCodeAt(0)]}}>
-                {user.firstName.charAt(0).toUpperCase()}</Avatar>
+              <Avatar
+                style={{
+                  backgroundColor:
+                    colors[
+                      user.firstName.charAt(0).toUpperCase().charCodeAt(0) -
+                        "A".charCodeAt(0)
+                    ],
+                }}
+              >
+                {user.firstName.charAt(0).toUpperCase()}
+              </Avatar>
             </ListItemAvatar>
-            
-            <ListItemText primary={user.userId} secondary={user.firstName+" "+user.lastName} />
-            {user.active?(<span className={classes.statusOnline}>Online</span>):
-            (<span className={classes.statusOffline}>{convertTime(user.lastSeen)}</span>)}
+
+            <ListItemText
+              primary={user.userId}
+              secondary={user.firstName + " " + user.lastName}
+            />
+            {user.active ? (
+              <span className={classes.statusOnline}>Online</span>
+            ) : (
+              <span className={classes.statusOffline}>
+                {convertTime(user.lastSeen)}
+              </span>
+            )}
           </ListItem>
         </List>
       ))}

@@ -1,15 +1,15 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const getTweetUrl = 'http://localhost:8082/tweet/getAllTweets';
-const addTweetUrl = 'http://localhost:8082/tweet/addTweet';
-const getMyTweetsUrl = 'http://localhost:8082/tweet/getTweetsByUserId';
-const getAllUsersUrl = 'http://localhost:8082/tweet/getAllUsers';
-const searchUserURL = 'http://localhost:8082/tweet/searchByUserName';
-const likeTweetURL = 'http://localhost:8082/tweet/likeTweet';
-const replyTweetURL = 'http://localhost:8082/tweet/replyTweet';
-const editTweetURL = 'http://localhost:8082/tweet/updateTweet';
-const deleteTweetURL = 'http://localhost:8082/tweet/deleteTweet';
+const getTweetUrl = "http://localhost:8082/tweet/getAllTweets";
+const addTweetUrl = "http://localhost:8082/tweet/addTweet";
+const getMyTweetsUrl = "http://localhost:8082/tweet/getTweetsByUserId";
+const getAllUsersUrl = "http://localhost:8082/tweet/getAllUsers";
+const searchUserURL = "http://localhost:8082/tweet/searchByUserName";
+const likeTweetURL = "http://localhost:8082/tweet/likeTweet";
+const replyTweetURL = "http://localhost:8082/tweet/replyTweet";
+const editTweetURL = "http://localhost:8082/tweet/updateTweet";
+const deleteTweetURL = "http://localhost:8082/tweet/deleteTweet";
 
 const initialState = {
   isLoading: false,
@@ -20,28 +20,27 @@ const initialState = {
 };
 
 export const getTweets = createAsyncThunk(
-  'tweet/getTweets',
+  "tweet/getTweets",
   async (reqBody, thunkAPI) => {
     try {
-      //   const authToken = reqBody.token;
-      console.log('calling tweet api');
+      console.log("calling tweet api");
       const resp = await axios.get(getTweetUrl, {
         headers: {
           Authorization: reqBody,
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
       });
       return resp.data;
     } catch (error) {
       console.error(error);
-      return thunkAPI.rejectWithValue('something went wrong');
+      return thunkAPI.rejectWithValue("something went wrong");
     }
   }
 );
 
 export const addTweet = createAsyncThunk(
-  'tweet/addTweet',
+  "tweet/addTweet",
   async (reqBody, thunkAPI) => {
     try {
       const res = await axios.post(addTweetUrl, reqBody.body, {
@@ -52,13 +51,13 @@ export const addTweet = createAsyncThunk(
       return res.data;
     } catch (err) {
       console.error(err);
-      return thunkAPI.rejectWithValue('something went wrong');
+      return thunkAPI.rejectWithValue("something went wrong");
     }
   }
 );
 
 export const getMyTweets = createAsyncThunk(
-  'tweet/getMyTweetsgetMyTweets',
+  "tweet/getMyTweetsgetMyTweets",
   async (reqBody, thunkAPI) => {
     try {
       const res = await axios.get(`${getMyTweetsUrl}/${reqBody.userId}`, {
@@ -69,13 +68,13 @@ export const getMyTweets = createAsyncThunk(
       return res.data;
     } catch (err) {
       console.error(err);
-      return thunkAPI.rejectWithValue('something went wrong');
+      return thunkAPI.rejectWithValue("something went wrong");
     }
   }
 );
 
 export const getAllUsers = createAsyncThunk(
-  'tweet/getAllUsers',
+  "tweet/getAllUsers",
   async (reqBody, thunkAPI) => {
     try {
       const res = await axios.get(getAllUsersUrl, {
@@ -86,13 +85,13 @@ export const getAllUsers = createAsyncThunk(
       return res.data;
     } catch (err) {
       console.error(err);
-      return thunkAPI.rejectWithValue('something went wrong');
+      return thunkAPI.rejectWithValue("something went wrong");
     }
   }
 );
 
 export const searchUserByUsername = createAsyncThunk(
-  'tweet/searchUserByUsername',
+  "tweet/searchUserByUsername",
   async (reqBody, thunkAPI) => {
     try {
       const res = await axios.get(`${searchUserURL}/${reqBody.userInput}`, {
@@ -103,13 +102,13 @@ export const searchUserByUsername = createAsyncThunk(
       return res.data;
     } catch (err) {
       console.error(err);
-      return thunkAPI.rejectWithValue('something went wrong');
+      return thunkAPI.rejectWithValue("something went wrong");
     }
   }
 );
 
 export const likeTweet = createAsyncThunk(
-  'likeTweet',
+  "likeTweet",
   async (reqBody, thunkAPI) => {
     try {
       const res = await axios.get(`${likeTweetURL}/${reqBody.tweetId}`, {
@@ -125,9 +124,9 @@ export const likeTweet = createAsyncThunk(
   }
 );
 
-export const tweetReply = createAsyncThunk('tweetReply', async (reqBody) => {
+export const tweetReply = createAsyncThunk("tweetReply", async (reqBody) => {
   try {
-    const res = axios.post(
+    const res = await axios.post(
       `${replyTweetURL}/${reqBody.tweetId}`,
       reqBody.body,
       {
@@ -142,7 +141,7 @@ export const tweetReply = createAsyncThunk('tweetReply', async (reqBody) => {
   }
 });
 
-export const editTweet = createAsyncThunk('editTweet', async (reqBody) => {
+export const editTweet = createAsyncThunk("editTweet", async (reqBody) => {
   try {
     const res = await axios.post(editTweetURL, reqBody.body, {
       headers: {
@@ -155,9 +154,9 @@ export const editTweet = createAsyncThunk('editTweet', async (reqBody) => {
   }
 });
 
-export const deleteTweet = createAsyncThunk('deleteTweet', async (reqBody) => {
+export const deleteTweet = createAsyncThunk("deleteTweet", async (reqBody) => {
   try {
-    const res = axios.get(`${deleteTweetURL}/${reqBody.tweetId}`, {
+    const res = await axios.get(`${deleteTweetURL}/${reqBody.tweetId}`, {
       headers: {
         Authorization: reqBody.token,
       },
@@ -169,7 +168,7 @@ export const deleteTweet = createAsyncThunk('deleteTweet', async (reqBody) => {
 });
 
 const tweetSlice = createSlice({
-  name: 'tweet',
+  name: "tweet",
   initialState,
   reducers: {
     getTweetsData: (state, action) => {
@@ -221,6 +220,7 @@ const tweetSlice = createSlice({
       });
     },
     [tweetReply.fulfilled]: (state, action) => {
+      console.log(action);
       state.tweets = state.tweets.map((t) => {
         if (t.tweetId === action.payload.tweetId) {
           t.tweetReply = action.payload.tweetReply;

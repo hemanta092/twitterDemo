@@ -1,31 +1,29 @@
-.profileimage{
-    max-width: 90%;
-    max-height: 90% ;
-    display : block;
-    margin : auto;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+.profileimage {
+  max-width: 90%;
+  max-height: 90%;
+  display: block;
+  margin: auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.buttonGroup{
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    margin-left: 5%;
-    padding: 10px;
-    display: block;
-  
-    width: 60%;
+.buttonGroup {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin-left: 5%;
+  padding: 10px;
+  display: block;
+
+  width: 60%;
 }
 
-.linkTo{
-    text-decoration: none;
+.linkTo {
+  text-decoration: none;
 }
-.linkTo:hover{
-    background-color: lightblue;
-    
+.linkTo:hover {
+  background-color: lightblue;
 }
-.mainButton{
-    
-    color: lightcoral;
+.mainButton {
+  color: lightcoral;
 }
-Button.mainButton:hover{
-    background-color: transparent ;
+Button.mainButton:hover {
+  background-color: transparent;
 }

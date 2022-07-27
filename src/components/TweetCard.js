@@ -1,41 +1,41 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
+import Avatar from "@material-ui/core/Avatar";
 import {
   ListItem,
   ListItemText,
   Typography,
   IconButton,
   Card,
-} from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import Divider from '@mui/material/Divider';
+} from "@material-ui/core";
+import { red } from "@material-ui/core/colors";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import Divider from "@mui/material/Divider";
 import {
   deleteTweet,
   editTweet,
   likeTweet,
   tweetReply,
-} from '../features/tweet/tweetSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, Modal, Snackbar, TextField } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
-import { useSnackbar } from 'notistack';
+} from "../features/tweet/tweetSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Modal, Snackbar, TextField } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
+import { useSnackbar } from "notistack";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant='filled' {...props} />;
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 function getModalStyle() {
@@ -50,75 +50,75 @@ function getModalStyle() {
 }
 
 var colors = [
-  'aqua',
-  'blanchedalmond',
-  'blue',
-  'fuchsia',
-  'gold',
-  'green',
-  'lime',
-  'coral',
-  'navy',
-  'olive',
-  'orange',
-  'mediumpurple',
-  'orangered',
-  'silver',
-  'teal',
-  'deepskyblue',
-  'yellow',
-  'lightsalmon',
-  'palegreen',
-  'pink',
-  'plum',
-  'tomato',
-  'violet',
-  'olivedrab',
-  'moccasin',
-  'lawngreen',
+  "aqua",
+  "blanchedalmond",
+  "blue",
+  "fuchsia",
+  "gold",
+  "green",
+  "lime",
+  "coral",
+  "navy",
+  "olive",
+  "orange",
+  "mediumpurple",
+  "orangered",
+  "silver",
+  "teal",
+  "deepskyblue",
+  "yellow",
+  "lightsalmon",
+  "palegreen",
+  "pink",
+  "plum",
+  "tomato",
+  "violet",
+  "olivedrab",
+  "moccasin",
+  "lawngreen",
 ];
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '100%',
+    maxWidth: "100%",
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: "56.25%", // 16:9
   },
   expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: "rotate(180deg)",
   },
   avatar: {
     backgroundColor: red[500],
   },
   replyBorder: {
-    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
   },
   replydiv: {
-    marginBottom: '25px',
+    marginBottom: "25px",
   },
   replyfield: {
-    width: '78%',
-    height: '50px',
-    marginRight: '2%',
+    width: "78%",
+    height: "50px",
+    marginRight: "2%",
   },
   replybutton: {
-    height: '55px',
-    width: '20%',
+    height: "55px",
+    width: "20%",
   },
   paper: {
-    position: 'absolute',
+    position: "absolute",
     width: 400,
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -138,7 +138,7 @@ export default function TweetCard({
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const [reply, setReply] = React.useState('');
+  const [reply, setReply] = React.useState("");
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [editedTweetText, setEditedTweetText] = React.useState(text);
@@ -150,7 +150,6 @@ export default function TweetCard({
 
   const { enqueueSnackbar } = useSnackbar();
 
-  //const theDate = new Date(time).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'});
   const handleOpen = () => {
     setOpen(true);
   };
@@ -170,7 +169,7 @@ export default function TweetCard({
         token,
       })
     );
-    setReply('');
+    setReply("");
   };
 
   const handleTweetReply = () => {
@@ -184,15 +183,15 @@ export default function TweetCard({
           token,
         })
       );
-      setReply('');
+      setReply("");
     } else {
-      const variant = 'error';
-      enqueueSnackbar('Please enter tweet reply!', { variant });
+      const variant = "error";
+      enqueueSnackbar("Please enter tweet reply!", { variant });
     }
   };
 
   const handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -228,11 +227,11 @@ export default function TweetCard({
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id='edit-tweet-modal'>Edit Tweet</h2>
+      <h2 id="edit-tweet-modal">Edit Tweet</h2>
 
       <TextField
-        label='Reply'
-        variant='outlined'
+        label="Reply"
+        variant="outlined"
         value={editedTweetText}
         onChange={(e) => setEditedTweetText(e.target.value)}
       />
@@ -245,14 +244,15 @@ export default function TweetCard({
       <CardHeader
         avatar={
           <Avatar
-            aria-label='recipe'
+            aria-label="recipe"
             style={{
               backgroundColor:
                 colors[
                   displayName.charAt(0).toUpperCase().charCodeAt(0) -
-                    'A'.charCodeAt(0)
+                    "A".charCodeAt(0)
                 ],
-            }}>
+            }}
+          >
             {displayName.charAt(0).toUpperCase()}
           </Avatar>
         }
@@ -262,30 +262,32 @@ export default function TweetCard({
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby='edit-tweet'
-        aria-describedby='edit-tweet-description'>
+        aria-labelledby="edit-tweet"
+        aria-describedby="edit-tweet-description"
+      >
         {body}
       </Modal>
       <CardContent>
-        <Typography variant='body1' color='textSecondary' component='p'>
+        <Typography variant="body1" color="textSecondary" component="p">
           {text}
         </Typography>
-        <Typography variant='body2' color='textSecondary' component='p'>
+        <Typography variant="body2" color="textSecondary" component="p">
           {tag}
         </Typography>
         <Typography
-          variant='caption'
-          color='textSecondary'
-          component='div'
-          align='right'>
+          variant="caption"
+          color="textSecondary"
+          component="div"
+          align="right"
+        >
           {new Date(createdTime).toLocaleString(undefined, {
-            timeZone: 'Asia/Kolkata',
+            timeZone: "Asia/Kolkata",
           })}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label='Like Tweet' onClick={handleLikeTweet}>
-          {liked ? <FavoriteIcon color='secondary' /> : <FavoriteIcon />}
+        <IconButton aria-label="Like Tweet" onClick={handleLikeTweet}>
+          {liked ? <FavoriteIcon color="secondary" /> : <FavoriteIcon />}
           <p>{likeCount}</p>
         </IconButton>
         <IconButton
@@ -294,21 +296,23 @@ export default function TweetCard({
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label='show more'>
+          aria-label="show more"
+        >
           <ExpandMoreIcon />
         </IconButton>
         {myTweet ? (
           <div>
-            <IconButton aria-label='Edit Tweet' onClick={handleOpen}>
+            <IconButton aria-label="Edit Tweet" onClick={handleOpen}>
               <EditIcon />
             </IconButton>
-            <IconButton aria-label='Delete Tweet' onClick={handleDeleteTweet}>
+            <IconButton aria-label="Delete Tweet" onClick={handleDeleteTweet}>
               <DeleteIcon />
               <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={6000}
-                onClose={handleSnackbarClose}>
-                <Alert onClose={handleSnackbarClose} severity='error'>
+                onClose={handleSnackbarClose}
+              >
+                <Alert onClose={handleSnackbarClose} severity="error">
                   Tweet Deleted!
                 </Alert>
               </Snackbar>
@@ -316,21 +320,22 @@ export default function TweetCard({
           </div>
         ) : null}
       </CardActions>
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <div className={classes.replydiv}>
             <TextField
               className={classes.replyfield}
-              label='Reply'
-              variant='outlined'
+              label="Reply"
+              variant="outlined"
               value={reply}
               onChange={(e) => setReply(e.target.value)}
             />
             <Button
               className={classes.replybutton}
-              variant='contained'
-              color='primary'
-              onClick={handleTweetReply}>
+              variant="contained"
+              color="primary"
+              onClick={handleTweetReply}
+            >
               Post Reply
             </Button>
           </div>
@@ -340,7 +345,7 @@ export default function TweetCard({
                 <ListItemText secondary={r.userId} primary={r.replyMsg} />
                 <span>
                   {new Date(r.creationTime).toLocaleString(undefined, {
-                    timeZone: 'Asia/Kolkata',
+                    timeZone: "Asia/Kolkata",
                   })}
                 </span>
               </ListItem>

@@ -1,12 +1,12 @@
-import React from 'react';
-import TweetBox from './TweetBox';
-import './Feed.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getTweets } from './features/tweet/tweetSlice';
-import { useNavigate } from 'react-router-dom';
-import { Divider, Grid } from '@material-ui/core';
-import TweetCard from './components/TweetCard';
+import React from "react";
+import TweetBox from "./TweetBox";
+import "./Feed.css";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getTweets } from "./features/tweet/tweetSlice";
+import { useNavigate } from "react-router-dom";
+import { Divider, Grid } from "@material-ui/core";
+import TweetCard from "./components/TweetCard";
 
 function Feed() {
   const { isLoggedIn, token } = useSelector((state) => state.user);
@@ -20,20 +20,21 @@ function Feed() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [isLoggedIn, navigate]);
 
   return (
     <>
-      <div className='feed'>
+      <div className="feed">
         <TweetBox />
         <Divider />
         <Grid
           container
-          direction='column'
-          justifyContent='space-evenly'
-          alignItems='stretch'>
+          direction="column"
+          justifyContent="space-evenly"
+          alignItems="stretch"
+        >
           {tweets?.map((post) => (
             <Grid item md key={post.tweetId}>
               <TweetCard

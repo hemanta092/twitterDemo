@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import TweetCard from '../components/TweetCard';
-import { Grid } from '@material-ui/core';
-import { getMyTweets } from '../features/tweet/tweetSlice';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import TweetCard from "../components/TweetCard";
+import { Grid } from "@material-ui/core";
+import { getMyTweets } from "../features/tweet/tweetSlice";
 
 const MyTweets = () => {
   const dispatch = useDispatch();
@@ -14,12 +14,13 @@ const MyTweets = () => {
   }, [token, userId, dispatch]);
   return (
     <>
-      <h1 style={{ textAlign: 'center' }}>My Tweets</h1>
+      <h1 style={{ textAlign: "center" }}>My Tweets</h1>
       <Grid
         container
-        direction='column'
-        justifyContent='space-evenly'
-        alignItems='stretch'>
+        direction="column"
+        justifyContent="space-evenly"
+        alignItems="stretch"
+      >
         {myTweets?.map((tweet) => (
           <Grid item md key={tweet.updateDateTime}>
             <TweetCard
