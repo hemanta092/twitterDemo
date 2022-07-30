@@ -1,15 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const getTweetUrl = "http://localhost:8082/tweet/getAllTweets";
-const addTweetUrl = "http://localhost:8082/tweet/addTweet";
-const getMyTweetsUrl = "http://localhost:8082/tweet/getTweetsByUserId";
-const getAllUsersUrl = "http://localhost:8082/tweet/getAllUsers";
-const searchUserURL = "http://localhost:8082/tweet/searchByUserName";
-const likeTweetURL = "http://localhost:8082/tweet/likeTweet";
-const replyTweetURL = "http://localhost:8082/tweet/replyTweet";
-const editTweetURL = "http://localhost:8082/tweet/updateTweet";
-const deleteTweetURL = "http://localhost:8082/tweet/deleteTweet";
+//const refURL = "http://65.2.29.179:8082/tweet/";
+const refURL = "http://localhost:8082/tweet/";
+const getTweetUrl = refURL + "getAllTweets";
+const addTweetUrl = refURL + "addTweet";
+const getMyTweetsUrl = refURL + "getTweetsByUserId";
+const getAllUsersUrl = refURL + "getAllUsers";
+const searchUserURL = refURL + "searchByUserName";
+const likeTweetURL = refURL + "likeTweet";
+const replyTweetURL = refURL + "replyTweet";
+const editTweetURL = refURL + "updateTweet";
+const deleteTweetURL = refURL + "deleteTweet";
 
 const initialState = {
   isLoading: false,
@@ -187,7 +189,9 @@ const tweetSlice = createSlice({
       state.isLoading = false;
     },
     [addTweet.fulfilled]: (state, action) => {
-      state.tweets = [...state.tweets, action.payload];
+      let newTweet = action.payload;
+      newTweet.tweetId = Math.random() + "radomid-temp";
+      state.tweets = [action.payload, ...state.tweets];
     },
     [getMyTweets.fulfilled]: (state, action) => {
       state.myTweets = action.payload;

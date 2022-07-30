@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginRequest } from "../features/user/userSlice";
+import { useSnackbar } from "notistack";
 
 const FormButton = ({ title }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loginInput } = useSelector((state) => state.user);
+  const { loginInput, loginsuccess } = useSelector((state) => state.user);
   const handleClick = async () => {
     await dispatch(loginRequest(loginInput));
-    navigate("/");
   };
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    if (loginsuccess === "2") {
+      navigate("/");
+    } else if (loginsuccess === "3") {
+      const variant = "error";
+      enqueueSnackbar("Invalid username or password!", { variant });
+    }
+  }, [loginsuccess, enqueueSnackbar, navigate]);
+
   return (
     <div id="button" className="row">
       <button onClick={handleClick}>{title}</button>

@@ -340,7 +340,7 @@ export default function TweetCard({
             </Button>
           </div>
           {replies?.map((r) => (
-            <div key={r.replyMsg}>
+            <div key={r.tweetreplyId}>
               <ListItem className={classes.replyBorder}>
                 <ListItemText secondary={r.userId} primary={r.replyMsg} />
                 <span>

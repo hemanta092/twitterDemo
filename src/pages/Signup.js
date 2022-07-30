@@ -50,7 +50,7 @@ const Signup = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
+    var valid = true;
     const form = {
       userId,
       password,
@@ -70,6 +70,7 @@ const Signup = () => {
       form.gender === "" ||
       form.mobileNo === ""
     ) {
+      valid = false;
       const variant = "error";
       enqueueSnackbar("Please fill all data!", { variant });
     }
@@ -78,20 +79,25 @@ const Signup = () => {
       form.gender.toUpperCase() !== "FEMALE" &&
       form.gender.toUpperCase() !== "OTHER"
     ) {
+      valid = false;
       const variant = "error";
       enqueueSnackbar("Gender can be Male/Female or Other", { variant });
     }
-    if (!form.mobileNo.match("/^d{10}$/")) {
+    if (form.mobileNo.match("/^d{10}$/") === false) {
+      valid = false;
       const variant = "error";
       enqueueSnackbar("Mobile Number must have 10 numbers only", { variant });
     }
     if (
+      form.dateOfBirth !== "" &&
       new Date(form.dateOfBirth).toLocaleDateString() >
-      new Date().toLocaleDateString()
+        new Date().toLocaleDateString()
     ) {
+      valid = false;
       const variant = "error";
       enqueueSnackbar("Date cannot be a future date", { variant });
-    } else {
+    }
+    if (valid) {
       dispatch(
         signupRequest({
           body: form,

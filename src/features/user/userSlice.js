@@ -1,12 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const loginurl = "http://localhost:8081/auth/login";
-const getUserUrl = "http://localhost:8081/auth/validate";
-const signupURL = "http://localhost:8081/auth/register";
-const signoutURL = "http://localhost:8082/tweet/logout";
-const forgotURL = "http://localhost:8081/auth/forget";
-const updatePasswordURL = "http://localhost:8081/auth/updatePassword";
+//const refURLT = "http://65.2.29.179:8082/tweet/";
+//const refURLA = "http://15.206.166.97:8081/auth/";
+const refURLT = "http://localhost:8082/tweet/";
+const refURLA = "http://localhost:8081/auth/";
+
+const loginurl = refURLA + "login";
+const getUserUrl = refURLA + "validate";
+const signupURL = refURLA + "register";
+const signoutURL = refURLT + "logout";
+const forgotURL = refURLA + "forget";
+const updatePasswordURL = refURLA + "updatePassword";
 
 const initialState = {
   user: {},
@@ -21,6 +26,7 @@ const initialState = {
   forgotResponse: "1",
   signupResponse: "1",
   forgotUserid: "",
+  loginsuccess: "1",
 };
 
 const defaultState = {
@@ -36,6 +42,7 @@ const defaultState = {
   forgotResponse: "1",
   signupResponse: "1",
   forgotUserid: "",
+  loginsuccess: "1",
 };
 
 export const loginRequest = createAsyncThunk(
@@ -148,6 +155,7 @@ const userSlice = createSlice({
     [loginRequest.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isLoggedIn = true;
+      state.loginsuccess = "2";
       state.userId = action.payload.userId;
       state.user.name = action.payload.userName;
       state.token = `Bearer ${action.payload.authToken}`;
@@ -155,6 +163,7 @@ const userSlice = createSlice({
     [loginRequest.rejected]: (state, action) => {
       console.log("rejected", action);
       state.isLoading = false;
+      state.loginsuccess = "3";
     },
     [getUser.pending]: (state) => {
       state.isLoading = true;
