@@ -25,7 +25,6 @@ export const getTweets = createAsyncThunk(
   "tweet/getTweets",
   async (reqBody, thunkAPI) => {
     try {
-      console.log("calling tweet api");
       const resp = await axios.get(getTweetUrl, {
         headers: {
           Authorization: reqBody,

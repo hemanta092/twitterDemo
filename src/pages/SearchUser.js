@@ -2,7 +2,6 @@ import {
   Avatar,
   Button,
   Container,
-  Divider,
   Grid,
   List,
   ListItem,
@@ -39,7 +38,7 @@ const SearchUser = () => {
   const [userInput, setUserInput] = useState("");
 
   useEffect(() => {
-    if (userInput.length >= 0) {
+    if (userInput.length > 0) {
       dispatch(searchUserByUsername({ userInput, token }));
     }
   }, [token, userInput, dispatch]);
@@ -91,18 +90,18 @@ const SearchUser = () => {
             label="Search User"
             variant="outlined"
             size="small"
-            fullWidth
+            
             onChange={searchUserInputHandler}
             style={{ width: "96%" }}
           />
         </Grid>
         <Grid item xs>
-          <Button size="medium" variant="contained" fullWidth color="primary">
+          <Button size="medium" variant="contained" style={{ width: "100%" }}  color="primary">
             Search
           </Button>
         </Grid>
       </Grid>
-      <Divider />
+      
       <Grid
         container
         direction="column"
@@ -113,7 +112,7 @@ const SearchUser = () => {
           <h2 className="noUser"> No User Found</h2>
         ) : (
           searchUserResults.map((user) => (
-            <Grid item md>
+            <Grid item md key={user.userId}>
               <List>
                 <ListItem className="listItem">
                   <ListItemAvatar>

@@ -86,7 +86,7 @@ const AllUsers = () => {
     <>
       <h1 style={{ textAlign: "center" }}>All Users</h1>
       {allUsers?.map((user) => (
-        <List className={classes.root}>
+        <List className={classes.root} key = {user.userId}>
           <ListItem className={classes.boxShadow}>
             <ListItemAvatar>
               <Avatar

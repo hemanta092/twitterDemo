@@ -8,8 +8,8 @@ const FormButton = ({ title }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loginInput, loginsuccess } = useSelector((state) => state.user);
-  const handleClick = async () => {
-    await dispatch(loginRequest(loginInput));
+  const  handleClick =  async() => {
+    dispatch(loginRequest(loginInput));
   };
 
   const { enqueueSnackbar } = useSnackbar();
@@ -17,7 +17,7 @@ const FormButton = ({ title }) => {
   useEffect(() => {
     if (loginsuccess === "2") {
       navigate("/");
-    } else if (loginsuccess === "3") {
+    } else if (loginsuccess !== "1") {
       const variant = "error";
       enqueueSnackbar("Invalid username or password!", { variant });
     }

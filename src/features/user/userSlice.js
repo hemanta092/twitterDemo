@@ -161,9 +161,9 @@ const userSlice = createSlice({
       state.token = `Bearer ${action.payload.authToken}`;
     },
     [loginRequest.rejected]: (state, action) => {
-      console.log("rejected", action);
+      
       state.isLoading = false;
-      state.loginsuccess = "3";
+      state.loginsuccess = (Math.random() + 1).toString(36).substring(7);
     },
     [getUser.pending]: (state) => {
       state.isLoading = true;
