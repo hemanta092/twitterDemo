@@ -13,15 +13,17 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <Grid container spacing={0}>
-        <Grid item xs={3}>
+      <div className="container-fluid">
+      <Grid container spacing={0} className="row mx-0 px-0">
+        <Grid item className="col col-md-3 d-none d-md-block mx-0 px-0">
           <img src={pic} alt="" className="profileimage" />
           <h1 style={{ textAlign: "center" }}>{user.name}</h1>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item className="col col-xs-12 pr-xs-0 col-md-9 col-lg-6 mx-0 px-0 justify-content-center">
           <Outlet />
         </Grid>
-        <Grid item xs={3}>
+        
+        <Grid item  className="col col-lg-3 d-none d-lg-block mx-0 px-3" >
           <ButtonGroup
             orientation="vertical"
             color="primary"
@@ -43,7 +45,9 @@ const Home = () => {
             </Link>
           </ButtonGroup>
         </Grid>
+        
       </Grid>
+      </div>
     </>
   );
 };

@@ -7,6 +7,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,8 +87,11 @@ const AllUsers = () => {
     <>
       <h1 style={{ textAlign: "center" }}>All Users</h1>
       {allUsers?.map((user) => (
-        <List className={classes.root} key = {user.userId}>
-          <ListItem className={classes.boxShadow}>
+        <List className={classes.root} key={user.userId}>
+          <ListItem
+            className={classes.boxShadow}
+            style={{ wordBreak: "break-word" }}
+          >
             <ListItemAvatar>
               <Avatar
                 style={{
@@ -107,10 +111,22 @@ const AllUsers = () => {
               secondary={user.firstName + " " + user.lastName}
             />
             {user.active ? (
-              <span className={classes.statusOnline}>Online</span>
+              <span className={classes.statusOnline}>
+                <div className="d-none d-sm-block">Online</div>
+                <div className="d-sm-none d-xs-block">
+                  {" "}
+                  <FiberManualRecordIcon />
+                </div>
+              </span>
             ) : (
               <span className={classes.statusOffline}>
-                {convertTime(user.lastSeen)}
+                <div className="d-none d-sm-block">
+                  {convertTime(user.lastSeen)}
+                </div>
+                <div className="d-sm-none d-xs-block">
+                  {" "}
+                  <FiberManualRecordIcon />
+                </div>
               </span>
             )}
           </ListItem>

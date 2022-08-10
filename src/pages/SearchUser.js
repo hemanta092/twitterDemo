@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Button,
   Container,
   Grid,
   List,
@@ -13,6 +12,7 @@ import "./SearchUser.css";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchUserByUsername } from "../features/tweet/tweetSlice";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 const convertTime = (time) => {
   const theDate = new Date(time).toLocaleString();
@@ -85,36 +85,35 @@ const SearchUser = () => {
         justifyContent="space-evenly"
         alignItems="center"
       >
-        <Grid item xs={9}>
+        <Grid item xs={12}>
           <TextField
-            label="Search User"
+            label="Type to Search"
             variant="outlined"
             size="small"
-            
+            style={{width :"100%"}}
             onChange={searchUserInputHandler}
-            style={{ width: "96%" }}
           />
         </Grid>
-        <Grid item xs>
-          <Button size="medium" variant="contained" style={{ width: "100%" }}  color="primary">
+        {/* <Grid item xs>
+          <Button size="medium" variant="contained"  color="primary">
             Search
           </Button>
-        </Grid>
+        </Grid> */}
       </Grid>
       
       <Grid
         container
         direction="column"
         justifyContent="space-evenly"
-        alignItems="stretch"
+        alignItems="center"
       >
         {searchUserResults === undefined || searchUserResults.length === 0 ? (
           <h2 className="noUser"> No User Found</h2>
         ) : (
           searchUserResults.map((user) => (
-            <Grid item md key={user.userId}>
-              <List>
-                <ListItem className="listItem">
+            <Grid item key={user.userId} style={{width:"100%" , paddingTop:"15px"}}>
+              <List >
+                <ListItem className="listItem text-break" >
                   <ListItemAvatar>
                     <Avatar
                       style={{
@@ -137,7 +136,13 @@ const SearchUser = () => {
                   <span
                     className={"status" + (user.active ? "Online" : "Offline")}
                   >
-                    {user.active ? "Online" : convertTime(user.lastSeen)}
+                    {user.active ? (<div><div className="d-none d-sm-block">Online</div>
+                <div className="d-sm-none d-xs-block">
+                  <FiberManualRecordIcon />
+                </div></div>) : (<div><div className="d-none d-sm-block">{convertTime(user.lastSeen)}</div>
+                <div className="d-sm-none d-xs-block">
+                  <FiberManualRecordIcon />
+                </div></div>)}
                   </span>
                 </ListItem>
               </List>

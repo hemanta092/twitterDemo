@@ -24,7 +24,7 @@ const FormButton = ({ title }) => {
   }, [loginsuccess, enqueueSnackbar, navigate]);
 
   return (
-    <div id="button" className="row">
+    <div id="button" className="input-row">
       <button onClick={handleClick}>{title}</button>
     </div>
   );

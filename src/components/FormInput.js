@@ -16,7 +16,7 @@ const FormInput = (props) => {
     }
   };
   return (
-    <div className="row">
+    <div className="input-row">
       <label>{props.description}</label>
       <input
         onChange={inputHandler}

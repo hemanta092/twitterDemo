@@ -88,11 +88,15 @@ const Signup = () => {
       const variant = "error";
       enqueueSnackbar("Mobile Number must have 10 numbers only", { variant });
     }
+    const dob = new Date(form.dateOfBirth).toLocaleDateString();
     if (
       form.dateOfBirth !== "" &&
-      new Date(form.dateOfBirth).toLocaleDateString() >
+      new Date(dob).toLocaleDateString() >
         new Date().toLocaleDateString()
     ) {
+      console.log(dob);
+      console.log(dob >
+      new Date().toLocaleDateString());
       valid = false;
       const variant = "error";
       enqueueSnackbar("Date cannot be a future date", { variant });

@@ -6,19 +6,13 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
-import {
-  ListItem,
-  ListItemText,
-  Typography,
-  IconButton,
-  Card,
-} from "@material-ui/core";
+import { ListItemText, Typography, IconButton, Card } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import Divider from '@material-ui/core/Divider';
+import Divider from "@material-ui/core/Divider";
 import {
   deleteTweet,
   editTweet,
@@ -30,24 +24,24 @@ import { Button, Modal, Snackbar, TextField } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import { useSnackbar } from "notistack";
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+// function rand() {
+//   return Math.round(Math.random() * 20) - 10;
+// }
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+// function getModalStyle() {
+//   const top = 50 + rand();
+//   const left = 50 + rand();
 
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
+//   return {
+//     top: `${top}%`,
+//     left: `${left}%`,
+//     transform: `translate(-${top}%, -${left}%)`,
+//   };
+// }
 
 var colors = [
   "aqua",
@@ -80,7 +74,7 @@ var colors = [
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: "100%",
+    maxWidth: "100vw",
   },
   media: {
     height: 0,
@@ -105,15 +99,6 @@ const useStyles = makeStyles((theme) => ({
   replydiv: {
     marginBottom: "25px",
   },
-  replyfield: {
-    width: "78%",
-    height: "50px",
-    marginRight: "2%",
-  },
-  replybutton: {
-    height: "55px",
-    width: "20%",
-  },
   paper: {
     position: "absolute",
     width: 400,
@@ -121,6 +106,14 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+  },
+  isActive: {
+    transitionDuration: "1s",
+    backgroundPosition: "-2800px 0",
+  },
+  heart: {
+    cursor: "pointer",
+    transition: "background-position 1s steps(28)",
   },
 }));
 
@@ -139,7 +132,7 @@ export default function TweetCard({
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [reply, setReply] = React.useState("");
-  const [modalStyle] = React.useState(getModalStyle);
+  // const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [editedTweetText, setEditedTweetText] = React.useState(text);
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
@@ -226,16 +219,58 @@ export default function TweetCard({
   };
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="edit-tweet-modal">Edit Tweet</h2>
+    // <div style={modalStyle} className={classes.paper}>
+    //   <h2 id="edit-tweet-modal">Edit Tweet</h2>
 
-      <TextField
-        label="Reply"
-        variant="outlined"
-        value={editedTweetText}
-        onChange={(e) => setEditedTweetText(e.target.value)}
-      />
-      <Button onClick={handleEditTweet}>Submit</Button>
+    //   <TextField
+    //     label="Reply"
+    //     variant="outlined"
+    //     value={editedTweetText}
+    //     onChange={(e) => setEditedTweetText(e.target.value)}
+    //   />
+    //   <Button onClick={handleEditTweet}>Submit</Button>
+    // </div>
+    <div className="modal modal-dialog modal-dialog-centered">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title">Edit Tweet</h5>
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="modal"
+            onClick={handleClose}
+            aria-label="Close"
+          ></button>
+        </div>
+        <div className="modal-body">
+          <form>
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control"
+                value={editedTweetText}
+                onChange={(e) => setEditedTweetText(e.target.value)}
+              />
+            </div>
+          </form>
+        </div>
+        <div className="modal-footer">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={handleClose}
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleEditTweet}
+          >
+            Edit Message
+          </button>
+        </div>
+      </div>
     </div>
   );
 
@@ -267,28 +302,30 @@ export default function TweetCard({
       >
         {body}
       </Modal>
-      <CardContent>
+
+      <CardContent style={{ wordBreak: "break-word", padding: "10px 15px" }}>
         <Typography variant="body1" color="textSecondary" component="p">
           {text}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           {tag}
         </Typography>
-        <Typography
-          variant="caption"
-          color="textSecondary"
-          component="div"
-          align="right"
-        >
-          {new Date(createdTime).toLocaleString(undefined, {
-            timeZone: "Asia/Kolkata",
-          })}
+        <Typography component="div">
+          <p className="card-text text-end">
+            <small className="text-muted text-black-50">
+              {new Date(createdTime).toLocaleString(undefined, {
+                timeZone: "Asia/Kolkata",
+              })}
+            </small>
+          </p>
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions disableSpacing className="px-0 py-0">
         <IconButton aria-label="Like Tweet" onClick={handleLikeTweet}>
           {liked ? <FavoriteIcon color="secondary" /> : <FavoriteIcon />}
-          <p>{likeCount}</p>
+          <div style={{ fontSize: ".5em", color: "#6c757d" }}>
+            <span>{likeCount}</span>
+          </div>
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {
@@ -301,7 +338,7 @@ export default function TweetCard({
           <ExpandMoreIcon />
         </IconButton>
         {myTweet ? (
-          <div>
+          <div className="d-flex">
             <IconButton aria-label="Edit Tweet" onClick={handleOpen}>
               <EditIcon />
             </IconButton>
@@ -324,31 +361,50 @@ export default function TweetCard({
         <CardContent>
           <div className={classes.replydiv}>
             <TextField
-              className={classes.replyfield}
               label="Reply"
               variant="outlined"
+              style={{ width: "100%" }}
               value={reply}
               onChange={(e) => setReply(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleTweetReply}
+                    style={{ height: "100%" }}
+                  >
+                    Reply
+                  </Button>
+                ),
+              }}
             />
-            <Button
-              className={classes.replybutton}
-              variant="contained"
-              color="primary"
-              onClick={handleTweetReply}
-            >
-              Post Reply
-            </Button>
           </div>
           {replies?.map((r) => (
             <div key={r.tweetreplyId}>
-              <ListItem className={classes.replyBorder}>
-                <ListItemText secondary={r.userId} primary={r.replyMsg} />
-                <span>
-                  {new Date(r.creationTime).toLocaleString(undefined, {
-                    timeZone: "Asia/Kolkata",
-                  })}
-                </span>
-              </ListItem>
+              <div
+                className={`px-2 ${classes.replyBorder}`}
+                style={{ wordBreak: "break-word" }}
+              >
+                <ListItemText
+                  component="p"
+                  secondary={r.userId}
+                  primary={r.replyMsg}
+                />
+                <div
+                  style={{
+                    fontSize: ".75em",
+                    color: "#6c757d",
+                    textAlign: "right",
+                  }}
+                >
+                  <span>
+                    {new Date(r.creationTime).toLocaleString(undefined, {
+                      timeZone: "Asia/Kolkata",
+                    })}
+                  </span>
+                </div>
+              </div>
             </div>
           ))}
         </CardContent>
